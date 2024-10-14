@@ -1,15 +1,20 @@
 package io.github.CosecSecCot.Screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import io.github.CosecSecCot.Core;
-import io.github.CosecSecCot.Scenes.GameScreenHUD;
+import io.github.CosecSecCot.Utils.UI.Button;
+
+import java.util.ArrayList;
 
 /**
  * The game screen, implements {@link Screen}
@@ -17,29 +22,31 @@ import io.github.CosecSecCot.Scenes.GameScreenHUD;
  * @author CosecSecCot
  * @see {@link Core}
  */
-public class GameScreen implements Screen {
+public class MainMenuScreen implements Screen {
     private Core game;
-    private OrthographicCamera camera;
-    private GameScreenHUD hud;
     private Viewport viewport;
-    private World world;
-    // TODO: Level
-    private int score;
+    private Stage stage;
+    private ArrayList<Button> buttons;
 
     /** @param game Instance of {@link Core} */
-    public GameScreen(Core game) {
+    public MainMenuScreen(Core game) {
         this.game = game;
-        this.score = 0;
-        this.hud = new GameScreenHUD(game, game.batch, game.font);
+        this.viewport = new FitViewport(Core.V_WIDTH, Core.V_HEIGHT, new OrthographicCamera());
+        this.stage = new Stage(this.viewport);
+        this.buttons = new ArrayList<>();
 
-        this.camera = new OrthographicCamera();
-        this.viewport = new FitViewport(Core.V_WIDTH / Core.PPM, Core.V_HEIGHT / Core.PPM, camera);
+        buttons.add(new Button("Play", new Vector2(stage.getWidth() / 2 - 100, stage.getHeight()/2 - 30), new Vector2(200, 60)));
+        buttons.get(0).getButton().addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new GameScreen(game));
+            }
+        });
 
-        // Make gameCamera centered in the middle of the screen
-        camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
-
-        // Box2D setup
-        this.world = new World(new Vector2(0, -9.8f), true);
+        for (Button button : buttons) {
+            stage.addActor(button.getButton());
+        }
+        Gdx.input.setInputProcessor(this.stage);
     }
 
     @Override
@@ -62,19 +69,14 @@ public class GameScreen implements Screen {
      */
     public void update(float deltaTime) {
         handleInput(deltaTime);
-
-        // how much time between physics calculation
-        world.step(1 / 60f, 6, 2);
-
-        hud.setScore(this.score);
     }
 
     @Override
-    public void render(float delta) {
-        update(delta);
+    public void render(float deltaTime) {
+        update(deltaTime);
 
         ScreenUtils.clear(0.7f, 0.7f, 0.7f, 1f);
-        hud.stage.draw();
+        stage.draw();
     }
 
     @Override
@@ -98,9 +100,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        world.dispose();
         game.dispose();
-        hud.dispose();
+        stage.dispose();
     }
 
 }
