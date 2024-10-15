@@ -14,15 +14,14 @@ import io.github.CosecSecCot.Scenes.GameScreenHUD;
 /**
  * The game screen, implements {@link Screen}
  *
- * @author CosecSecCot
- * @see {@link Core}
+ * @see Core
  */
 public class GameScreen implements Screen {
-    private Core game;
-    private OrthographicCamera camera;
-    private GameScreenHUD hud;
-    private Viewport viewport;
-    private World world;
+    private final Core game;
+    private final OrthographicCamera camera;
+    private final GameScreenHUD hud;
+    private final Viewport viewport;
+    private final World world;
     // TODO: Level
     private int score;
 
@@ -30,7 +29,7 @@ public class GameScreen implements Screen {
     public GameScreen(Core game) {
         this.game = game;
         this.score = 0;
-        this.hud = new GameScreenHUD(game, game.batch, game.font);
+        this.hud = new GameScreenHUD(game, game.batch);
 
         this.camera = new OrthographicCamera();
         this.viewport = new FitViewport(Core.V_WIDTH / Core.PPM, Core.V_HEIGHT / Core.PPM, camera);
