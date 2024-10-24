@@ -1,5 +1,6 @@
 package io.github.CosecSecCot.Screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
@@ -29,7 +30,7 @@ public class GameScreen implements Screen {
     public GameScreen(Core game) {
         this.game = game;
         this.score = 0;
-        this.hud = new GameScreenHUD(game, game.batch);
+        this.hud = new GameScreenHUD(game, this);
 
         this.camera = new OrthographicCamera();
         this.viewport = new FitViewport(Core.V_WIDTH, Core.V_HEIGHT, camera);
@@ -60,7 +61,7 @@ public class GameScreen implements Screen {
     }
 
     /**
-     * Handles Input
+     * Handles Input every frame
      *
      * @param deltaTime Delta time.
      */
@@ -78,20 +79,29 @@ public class GameScreen implements Screen {
         // how much time between physics calculation
         world.step(1 / 60f, 6, 2);
 
-        hud.setScore(this.score);
+        hud.setScore(score);
     }
 
     @Override
     public void render(float delta) {
-        update(delta);
+        Gdx.input.setInputProcessor(hud.stage);
+        if (!Core.paused) {
+            update(delta);
+        } else {
+            Gdx.app.log("GameScreen", "Paused");
+        }
 
-        ScreenUtils.clear(0.7f, 0.7f, 0.7f, 1f);
+        ScreenUtils.clear(0.0f, 0.0f, 0.0f, 1f);
+        game.batch.begin();
+        game.batch.draw(game.background_img, 0, 0);
+        game.batch.end();
         hud.stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
+        hud.viewport.update(width, height);
     }
 
     @Override
@@ -111,7 +121,6 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         world.dispose();
-        game.dispose();
         hud.dispose();
     }
 
