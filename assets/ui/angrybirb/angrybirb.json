@@ -1,0 +1,295 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	angrybirds-heading: {
+		file: angrybirds-regular.fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	angrybirds-regular: {
+		file: angrybirds-regular(1).fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	result_font: {
+		file: angrybirds-regular(3).fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+	title_font: {
+		file: angrybirds-regular(2).fnt
+		scaledSize: -1
+		markupEnabled: false
+		flip: false
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	BLACK: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	DARK_GREY: {
+		r: 0.6
+		g: 0.6
+		b: 0.6
+		a: 1
+	}
+	Gold: {
+		r: 1
+		g: 0.79607844
+		b: 0.09411765
+		a: 1
+	}
+	GOLD_BORDER: {
+		r: 0.77254903
+		g: 0.50980395
+		b: 0
+		a: 1
+	}
+	LIGHT_GREY: {
+		r: 0.9019608
+		g: 0.9019608
+		b: 0.9019608
+		a: 1
+	}
+	MEDIUM_GRAY: {
+		r: 0.7490196
+		g: 0.7490196
+		b: 0.7490196
+		a: 1
+	}
+	WHITE: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+	WINDOW_BACKGROUND: {
+		r: 0
+		g: 0
+		b: 0
+		a: 0.66854
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	BACK_BUTTON_OVER: {
+		name: BACK_BUTTON
+		color: LIGHT_GREY
+	}
+	BACK_BUTTON_CLICKED: {
+		name: BACK_BUTTON
+		color: MEDIUM_GRAY
+	}
+	EXIT_BUTTON_OVER: {
+		name: EXIT_BUTTON
+		color: LIGHT_GREY
+	}
+	EXIT_BUTTON_CLICKED: {
+		name: EXIT_BUTTON
+		color: MEDIUM_GRAY
+	}
+	PAUSE_BUTTON_CLICKED: {
+		name: PAUSE_BUTTON
+		color: MEDIUM_GRAY
+	}
+	RESULT_BUTTON_CLICKED: {
+		name: RESULT_BUTTON
+		color: MEDIUM_GRAY
+	}
+	RESULT_BUTTON_OVER: {
+		name: RESULT_BUTTON
+		color: LIGHT_GREY
+	}
+	BASE_BUTTON_DOWN: {
+		name: BASE_BUTTON
+		color: MEDIUM_GRAY
+	}
+	BASE_BUTTON_OVER: {
+		name: BASE_BUTTON
+		color: LIGHT_GREY
+	}
+	RESUME_BUTTON_CLICKED: {
+		name: RESUME_BUTTON
+		color: MEDIUM_GRAY
+	}
+	RESUME_BUTTON_OVER: {
+		name: RESUME_BUTTON
+		color: LIGHT_GREY
+	}
+	RETRY_BUTTON_CLICKED: {
+		name: RETRY_BUTTON
+		color: MEDIUM_GRAY
+	}
+	RETRY_BUTTON_OVER: {
+		name: RETRY_BUTTON
+		color: LIGHT_GREY
+	}
+	MENU_BUTTON_CLICKED: {
+		name: MENU_BUTTON
+		color: MEDIUM_GRAY
+	}
+	MENU_BUTTON_OVER: {
+		name: MENU_BUTTON
+		color: LIGHT_GREY
+	}
+	WINDOW_BACKGROUND: {
+		name: white-pixel
+		color: BLACK
+	}
+	WINDOW_STAGE_BACKGROUND: {
+		name: white-pixel
+		color: WINDOW_BACKGROUND
+	}
+	BASE_IMAGE_BUTTON_CLICKED: {
+		name: BASE_IMAGE_BUTTON
+		color: MEDIUM_GRAY
+	}
+	BASE_IMAGE_BUTTON_OVER: {
+		name: BASE_IMAGE_BUTTON
+		color: LIGHT_GREY
+	}
+	PLAY_BUTTON_CLICKED: {
+		name: PLAY_BUTTON
+		color: MEDIUM_GRAY
+	}
+	PLAY_BUTTON_OVER: {
+		name: PLAY_BUTTON
+		color: LIGHT_GREY
+	}
+	ADD_SCORE_BUTTON_CLICKED: {
+		name: ADD_SCORE_BUTTON
+		color: MEDIUM_GRAY
+	}
+	ADD_SCORE_BUTTON_OVER: {
+		name: ADD_SCORE_BUTTON
+		color: LIGHT_GREY
+	}
+	LEVEL_BUTTON_CLICKED: {
+		name: LEVEL_BUTTON
+		color: MEDIUM_GRAY
+	}
+	LEVEL_BUTTON_OVER: {
+		name: LEVEL_BUTTON
+		color: LIGHT_GREY
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: BASE_BUTTON
+		down: BASE_BUTTON_DOWN
+		over: BASE_BUTTON_OVER
+		pressedOffsetY: -2
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: {
+		imageUp: BASE_IMAGE_BUTTON
+		imageDown: BASE_IMAGE_BUTTON_CLICKED
+		imageOver: BASE_IMAGE_BUTTON_OVER
+		pressedOffsetY: -2
+	}
+	back_button: {
+		imageUp: BACK_BUTTON
+		imageDown: BACK_BUTTON_CLICKED
+		imageOver: BACK_BUTTON_OVER
+		pressedOffsetY: -2
+	}
+	exit_button: {
+		imageUp: EXIT_BUTTON
+		imageDown: EXIT_BUTTON_CLICKED
+		imageOver: EXIT_BUTTON_OVER
+		pressedOffsetY: -2
+	}
+	pause_button: {
+		imageUp: PAUSE_BUTTON
+		imageDown: PAUSE_BUTTON_CLICKED
+		pressedOffsetY: -2
+	}
+	result_button: {
+		imageUp: RESULT_BUTTON
+		imageDown: RESULT_BUTTON_CLICKED
+		imageOver: RESULT_BUTTON_OVER
+		pressedOffsetY: -2
+	}
+	resume_button: {
+		imageUp: RESUME_BUTTON
+		imageDown: RESUME_BUTTON_CLICKED
+		imageOver: RESUME_BUTTON_OVER
+		pressedOffsetY: -2
+	}
+	retry_button: {
+		imageUp: RETRY_BUTTON
+		imageDown: RETRY_BUTTON_CLICKED
+		imageOver: RETRY_BUTTON_OVER
+		pressedOffsetY: -2
+	}
+	menu_button: {
+		imageUp: MENU_BUTTON
+		imageDown: MENU_BUTTON_CLICKED
+		imageOver: MENU_BUTTON_OVER
+		pressedOffsetY: -2
+	}
+	play_button: {
+		imageUp: PLAY_BUTTON
+		imageDown: PLAY_BUTTON_CLICKED
+		imageOver: PLAY_BUTTON_OVER
+		pressedOffsetY: -2
+	}
+	add_score: {
+		imageUp: ADD_SCORE_BUTTON
+		imageDown: ADD_SCORE_BUTTON_CLICKED
+		imageOver: ADD_SCORE_BUTTON_OVER
+		pressedOffsetY: -2
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: angrybirds-regular
+	}
+	heading: {
+		font: angrybirds-heading
+	}
+	title: {
+		font: title_font
+	}
+	result: {
+		font: result_font
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		parent: default
+		font: angrybirds-regular
+		downFontColor: MEDIUM_GRAY
+		overFontColor: LIGHT_GREY
+		pressedOffsetY: -2
+	}
+	level_0_star: {
+		font: angrybirds-regular
+		downFontColor: MEDIUM_GRAY
+		overFontColor: LIGHT_GREY
+		up: LEVEL_BUTTON
+		down: LEVEL_BUTTON_CLICKED
+		over: LEVEL_BUTTON_OVER
+		pressedOffsetY: 8
+		unpressedOffsetY: 9
+		checkedOffsetY: 9
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: WINDOW_BACKGROUND
+		titleFont: angrybirds-heading
+		stageBackground: WINDOW_STAGE_BACKGROUND
+	}
+}
+}
