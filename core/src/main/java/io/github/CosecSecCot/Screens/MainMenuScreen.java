@@ -3,18 +3,20 @@ package io.github.CosecSecCot.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import io.github.CosecSecCot.Core;
-import io.github.CosecSecCot.Utils.UI.CustomButton;
-
-import java.util.ArrayList;
 
 /**
  * The main menu screen, implements {@link Screen}
@@ -25,26 +27,39 @@ public class MainMenuScreen implements Screen {
     private Core game;
     private Viewport viewport;
     private Stage stage;
-    private ArrayList<CustomButton> buttons;
 
     /** @param game Instance of {@link Core} */
     public MainMenuScreen(Core game) {
         this.game = game;
         this.viewport = new FitViewport(Core.V_WIDTH, Core.V_HEIGHT, new OrthographicCamera());
-        this.stage = new Stage(this.viewport);
-        this.buttons = new ArrayList<>();
+        this.stage = new Stage(this.viewport, game.batch);
 
-        buttons.add(new CustomButton("Play", new Vector2(stage.getWidth() / 2 - 100, stage.getHeight()/2 - 30), new Vector2(200, 60)));
-        buttons.getFirst().getButton().addListener(new ClickListener() {
+        Label title = new Label("Angry Birb", game.skin, "title");
+        title.setPosition(stage.getWidth()/2 - title.getWidth()/2, stage.getHeight() - title.getHeight() - 100);
+
+        ImageButton playButton = new ImageButton(game.skin, "play_button");
+        playButton.setPosition(stage.getWidth() / 2 - playButton.getWidth()/2, stage.getHeight()/2 - playButton.getHeight()/2);
+        playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new LevelSelectScreen(game));
             }
         });
 
-        for (CustomButton button : buttons) {
-            stage.addActor(button.getButton());
-        }
+        ImageButton exitButton = new ImageButton(game.skin, "exit_button");
+        exitButton.setPosition(10, 10);
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+                System.exit(0);
+            }
+        });
+
+
+        stage.addActor(title);
+        stage.addActor(playButton);
+        stage.addActor(exitButton);
         Gdx.input.setInputProcessor(this.stage);
     }
 
@@ -74,8 +89,13 @@ public class MainMenuScreen implements Screen {
     public void render(float deltaTime) {
         update(deltaTime);
 
-        ScreenUtils.clear(0.7f, 0.7f, 0.7f, 1f);
+        ScreenUtils.clear(0.0f, 0.0f, 0.0f, 1f);
+        game.batch.begin();
+        game.batch.draw(game.background_img, 0, 0);
+        game.batch.end();
+
         stage.draw();
+
     }
 
     @Override
@@ -99,7 +119,6 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        game.dispose();
         stage.dispose();
     }
 
