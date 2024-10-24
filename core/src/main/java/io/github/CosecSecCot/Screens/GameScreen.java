@@ -32,13 +32,26 @@ public class GameScreen implements Screen {
         this.hud = new GameScreenHUD(game, game.batch);
 
         this.camera = new OrthographicCamera();
-        this.viewport = new FitViewport(Core.V_WIDTH / Core.PPM, Core.V_HEIGHT / Core.PPM, camera);
+        this.viewport = new FitViewport(Core.V_WIDTH, Core.V_HEIGHT, camera);
 
         // Make gameCamera centered in the middle of the screen
         camera.position.set(viewport.getWorldWidth() / 2, viewport.getWorldHeight() / 2, 0);
 
         // Box2D setup
         this.world = new World(new Vector2(0, -9.8f), true);
+    }
+
+    public void restartLevel() {
+        game.setScreen(new GameScreen(game));
+        dispose();
+    }
+
+    public void increaseScore(int amount) {
+        this.score += amount;
+    }
+
+    public int getScore() {
+        return this.score;
     }
 
     @Override
