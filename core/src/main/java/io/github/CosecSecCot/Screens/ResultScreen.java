@@ -95,7 +95,6 @@ public class ResultScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        Core.logger.info("Resized ResultScreen to " + width + "x" + height);
         this.viewport.update(width, height);
     }
 

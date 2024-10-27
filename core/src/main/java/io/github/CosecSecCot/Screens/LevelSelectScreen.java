@@ -107,7 +107,6 @@ public class LevelSelectScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        Core.logger.info("Resized LevelSelectScreen to " + width + "x" + height);
         this.viewport.update(width, height);
     }
 

@@ -21,9 +21,8 @@ import io.github.CosecSecCot.Screens.ResultScreen;
  * HUD for the game.
  */
 public class GameScreenHUD implements Disposable {
-    Core game;
-    public Stage stage;
-    public Viewport viewport;
+    private final Stage stage;
+    private final Viewport viewport;
 
     private final Label score;
     private final ImageButton pauseButton;
@@ -32,7 +31,6 @@ public class GameScreenHUD implements Disposable {
     private final ImageButton resultButton;
 
     public GameScreenHUD(Core game, GameScreen gameScreen) {
-        this.game = game;
         this.viewport = new FitViewport(Core.V_WIDTH, Core.V_HEIGHT, new OrthographicCamera());
         this.stage = new Stage(viewport, game.batch);
 
@@ -154,6 +152,14 @@ public class GameScreenHUD implements Disposable {
 
         resultButton.setDisabled(false);
         resultButton.setTouchable(Touchable.enabled);
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public Viewport getViewport() {
+        return viewport;
     }
 
     public void setScore(Integer newScore) {

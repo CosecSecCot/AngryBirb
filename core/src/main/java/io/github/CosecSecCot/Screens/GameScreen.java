@@ -156,7 +156,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.input.setInputProcessor(hud.stage);
+        Gdx.input.setInputProcessor(hud.getStage());
         if (!Core.paused) {
             this.update(delta);
         }
@@ -170,14 +170,13 @@ public class GameScreen implements Screen {
         game.batch.end();
 
 //        debugRenderer.render(world, camera.combined);
-        hud.stage.draw();
+        hud.getStage().draw();
     }
 
     @Override
     public void resize(int width, int height) {
-        Core.logger.info("Resized GameScreen to " + width + "x" + height);
         this.viewport.update(width, height);
-        this.hud.viewport.update(width, height);
+        this.hud.getViewport().update(width, height);
     }
 
     @Override

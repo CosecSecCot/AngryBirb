@@ -61,10 +61,24 @@ public class Slingshot {
         this.body.createFixture(fixtureDef);
     }
 
+    /**
+     * Runs every frame.
+     *
+     * @param deltaTime Delta time.
+     */
     public void update(float deltaTime) {
 //        back.setPosition(body.getPosition().x - back.getWidth()/2 + xOffset, body.getPosition().y - back.getHeight()/2 - yOffset);
     }
 
+    /**
+     * Draws the slingshot on the screen.
+     *
+     * <p>
+     * {@code SpriteBatch.begin()} must be called before invoking this function.
+     * </p>
+     *
+     * @param batch {@link SpriteBatch} of the game.
+     */
     public void draw(SpriteBatch batch) {
         this.back.draw(batch);
         this.front.draw(batch);

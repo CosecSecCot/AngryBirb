@@ -14,8 +14,8 @@ public class Core extends Game {
     public static final int V_HEIGHT = 720;
     public static boolean paused = false;
     public static Logger logger;
-    public SpriteBatch batch;
 
+    public SpriteBatch batch;
     public Skin skin;
     public TextureAtlas atlas;
 

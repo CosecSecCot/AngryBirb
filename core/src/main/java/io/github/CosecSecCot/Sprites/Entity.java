@@ -33,8 +33,16 @@ public abstract class Entity extends Sprite {
         this.setRegion(texture);
     }
 
+    /**
+     * Used to define the {@link Body} of the entity.
+     */
     abstract protected void define();
 
+    /**
+     * Runs every frame.
+     *
+     * @param deltaTime Delta time.
+     */
     public void update(float deltaTime) {
         this.setPosition(body.getPosition().x - this.getWidth()/2 + xOffset, body.getPosition().y - this.getHeight()/2 - yOffset);
         if (health == 0)
@@ -65,7 +73,6 @@ public abstract class Entity extends Sprite {
     public void setYOffset(float yOffset) {
         this.yOffset = yOffset;
     }
-
 
     public void destroy() {
         assert world != null;

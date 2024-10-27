@@ -24,6 +24,11 @@ public class Level {
         this.isComplete = false;
     }
 
+    /**
+     * Runs every frame.
+     *
+     * @param deltaTime Delta time.
+     */
     public void update(float deltaTime) {
         if (birds.isEmpty() || pigs.isEmpty()) {
             this.isComplete = true;
@@ -42,6 +47,15 @@ public class Level {
         slingshot.update(deltaTime);
     }
 
+    /**
+     * Draws all the entities in the level.
+     *
+     * <p>
+     * {@code SpriteBatch.begin()} must be called before invoking this function.
+     * </p>
+     *
+     * @param batch {@link SpriteBatch} of the game.
+     */
     public void draw(SpriteBatch batch) {
         for (Pig pig : pigs) {
             pig.draw(batch);
