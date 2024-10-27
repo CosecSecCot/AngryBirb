@@ -66,9 +66,9 @@ public class LevelSelectScreen implements Screen {
             table.add(levelButton);
         }
 
-        stage.addActor(table);
+        this.stage.addActor(table);
 //        table.setDebug(true);
-        stage.addActor(backButton);
+        this.stage.addActor(backButton);
         Gdx.input.setInputProcessor(this.stage);
     }
 
@@ -77,32 +77,13 @@ public class LevelSelectScreen implements Screen {
 
     }
 
-    /**
-     * Handles Input
-     *
-     * @param deltaTime Delta time.
-     */
-    public void handleInput(float deltaTime) {
-    }
-
-    /**
-     * Runs every frame to update the contents on the screen.
-     *
-     * @param deltaTime Delta time.
-     */
-    public void update(float deltaTime) {
-        handleInput(deltaTime);
-    }
-
     @Override
     public void render(float deltaTime) {
-        update(deltaTime);
-
         ScreenUtils.clear(0.0f, 0.0f, 0.0f, 1f);
-        game.batch.begin();
-        game.batch.draw(game.atlas.findRegion("background", 1), 0, 0);
-        game.batch.end();
-        stage.draw();
+        this.game.batch.begin();
+        this.game.batch.draw(this.game.atlas.findRegion("background", 1), 0, 0);
+        this.game.batch.end();
+        this.stage.draw();
     }
 
     @Override
@@ -127,7 +108,7 @@ public class LevelSelectScreen implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+        this.stage.dispose();
     }
 
 }

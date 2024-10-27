@@ -75,10 +75,10 @@ public abstract class Entity extends Sprite {
     }
 
     public void destroy() {
-        assert world != null;
-        if (body != null) {
-            world.destroyBody(body);
-            body = null;
+        assert this.world != null;
+        if (this.body != null) {
+            this.world.destroyBody(body);
+            this.body = null;
         }
 
         this.getTexture().dispose();

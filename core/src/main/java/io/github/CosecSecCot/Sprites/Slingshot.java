@@ -9,8 +9,8 @@ import com.badlogic.gdx.physics.box2d.*;
 import io.github.CosecSecCot.Core;
 
 public class Slingshot {
-    Sprite back;
-    Sprite front;
+    private final Sprite back;
+    private final Sprite front;
     private final Vector2 position;
     private Vector2 angle;
     private boolean isDragging;

@@ -43,7 +43,7 @@ public class GameScreen implements Screen {
 
         // Box2D setup
         this.world = new World(new Vector2(0, -10f), true);
-        debugRenderer = new Box2DDebugRenderer();
+        this.debugRenderer = new Box2DDebugRenderer();
 
         // Ground
         BodyDef groundBodyDef = new BodyDef();
@@ -59,7 +59,7 @@ public class GameScreen implements Screen {
         groundBody.createFixture(groundFixtureDef);
 
         // Level
-        switch (level.LEVEL_NUMBER) {
+        switch (this.level.LEVEL_NUMBER) {
             case 1 -> {
                 this.level.addBird(new Red(this.world, this.game, 100, 170, 10));
                 this.level.addBird(new Red(this.world, this.game, 160, 170, 10));
@@ -101,12 +101,12 @@ public class GameScreen implements Screen {
             }
         }
         Slingshot slingshot = new Slingshot(this.world, this.game, 300, 177);
-        level.setSlingshot(slingshot);
+        this.level.setSlingshot(slingshot);
     }
 
     public void restartLevel() {
         dispose();
-        this.game.setScreen(new GameScreen(game, new Level(level.LEVEL_NUMBER)));
+        this.game.setScreen(new GameScreen(game, new Level(this.level.LEVEL_NUMBER)));
     }
 
     public void increaseScore(int amount) {
@@ -118,11 +118,11 @@ public class GameScreen implements Screen {
     }
 
     public Core getGame() {
-        return game;
+        return this.game;
     }
 
     public World getWorld() {
-        return world;
+        return this.world;
     }
 
     @Override
@@ -151,12 +151,12 @@ public class GameScreen implements Screen {
         this.world.step(1 / 60f, 10, 5);
 
         this.level.update(deltaTime);
-        this.hud.setScore(score);
+        this.hud.setScore(this.score);
     }
 
     @Override
     public void render(float delta) {
-        Gdx.input.setInputProcessor(hud.getStage());
+        Gdx.input.setInputProcessor(this.hud.getStage());
         if (!Core.paused) {
             this.update(delta);
         }
@@ -164,13 +164,13 @@ public class GameScreen implements Screen {
         ScreenUtils.clear(0.0f, 0.0f, 0.0f, 1f);
 
         // Drawing sprites
-        game.batch.begin();
-        game.batch.draw(game.atlas.findRegion("background", 1), 0, 0);
-        level.draw(game.batch);
-        game.batch.end();
+        this.game.batch.begin();
+        this.game.batch.draw(this.game.atlas.findRegion("background", 1), 0, 0);
+        this.level.draw(this.game.batch);
+        this.game.batch.end();
 
 //        debugRenderer.render(world, camera.combined);
-        hud.getStage().draw();
+        this.hud.getStage().draw();
     }
 
     @Override
@@ -195,8 +195,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        world.dispose();
-        hud.dispose();
+        this.world.dispose();
+        this.hud.dispose();
     }
 
 }

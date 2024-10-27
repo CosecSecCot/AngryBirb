@@ -112,8 +112,8 @@ public class GameScreenHUD implements Disposable {
 
         pauseMenu.padTop(64);
         pauseMenu.padLeft(32);
-        pauseMenu.setHeight(stage.getHeight());
-        pauseMenu.setWidth(stage.getWidth()/3);
+        pauseMenu.setHeight(this.stage.getHeight());
+        pauseMenu.setWidth(this.stage.getWidth()/3);
         pauseMenu.setPosition(0, 0);
         pauseMenu.add(resumeButton).padBottom(100).row();
         pauseMenu.add(retryButton).pad(10).row();
@@ -122,11 +122,11 @@ public class GameScreenHUD implements Disposable {
         pauseMenu.setMovable(false);
         pauseMenu.setVisible(false);
 
-        stage.addActor(score);
-        stage.addActor(pauseButton);
-        stage.addActor(addScoreButton);
-        stage.addActor(resultButton);
-        stage.addActor(pauseMenu);
+        this.stage.addActor(this.score);
+        this.stage.addActor(pauseButton);
+        this.stage.addActor(addScoreButton);
+        this.stage.addActor(resultButton);
+        this.stage.addActor(pauseMenu);
 //        stage.setDebugAll(true);
     }
 
@@ -155,20 +155,20 @@ public class GameScreenHUD implements Disposable {
     }
 
     public Stage getStage() {
-        return stage;
+        return this.stage;
     }
 
     public Viewport getViewport() {
-        return viewport;
+        return this.viewport;
     }
 
-    public void setScore(Integer newScore) {
-        score.setText(String.format("SCORE: %06d", newScore));
+    public void setScore(int newScore) {
+        this.score.setText(String.format("SCORE: %06d", newScore));
     }
 
     @Override
     public void dispose() {
-        stage.dispose();
+        this.stage.dispose();
     }
 
 }

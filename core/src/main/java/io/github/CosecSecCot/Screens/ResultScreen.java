@@ -22,7 +22,7 @@ public class ResultScreen implements Screen {
     public ResultScreen(Core game, GameScreen gameScreen) {
         this.game = game;
         this.viewport = new FitViewport(Core.V_WIDTH, Core.V_HEIGHT, new OrthographicCamera());
-        this.stage = new Stage(viewport, game.batch);
+        this.stage = new Stage(viewport, this.game.batch);
 
         Table table = new Table();
         table.top();
@@ -54,8 +54,8 @@ public class ResultScreen implements Screen {
         table.add(retryButton).left().pad(10);
 //        table.debug();
 
-        stage.addActor(table);
-        Gdx.input.setInputProcessor(stage);
+        this.stage.addActor(table);
+        Gdx.input.setInputProcessor(this.stage);
     }
 
     @Override
@@ -63,33 +63,14 @@ public class ResultScreen implements Screen {
 
     }
 
-    /**
-     * Handles Input
-     *
-     * @param deltaTime Delta time.
-     */
-    public void handleInput(float deltaTime) {
-    }
-
-    /**
-     * Runs every frame to update the contents on the screen.
-     *
-     * @param deltaTime Delta time.
-     */
-    public void update(float deltaTime) {
-        handleInput(deltaTime);
-    }
-
     @Override
     public void render(float deltaTime) {
-        update(deltaTime);
-
         ScreenUtils.clear(0.0f, 0.0f, 0.0f, 1f);
-        game.batch.begin();
-        game.batch.draw(game.atlas.findRegion("background", 1), 0, 0);
-        game.batch.end();
+        this.game.batch.begin();
+        this.game.batch.draw(this.game.atlas.findRegion("background", 1), 0, 0);
+        this.game.batch.end();
 
-        stage.draw();
+        this.stage.draw();
 
     }
 
@@ -115,6 +96,6 @@ public class ResultScreen implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+        this.stage.dispose();
     }
 }

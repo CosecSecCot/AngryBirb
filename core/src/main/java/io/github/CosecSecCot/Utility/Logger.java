@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import java.time.LocalDateTime;
 
 public class Logger {
-    boolean canLog;
+    private final boolean canLog;
 
     public Logger(boolean canLog) {
         this.canLog = canLog;
