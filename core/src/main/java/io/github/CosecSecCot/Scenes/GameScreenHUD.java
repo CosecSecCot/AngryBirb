@@ -29,9 +29,6 @@ public class GameScreenHUD implements Disposable {
     private final ImageButton pauseButton;
     private final Window pauseMenu;
     private final ImageButton addScoreButton;
-    private final ImageButton resumeButton;
-    private final ImageButton retryButton;
-    private final ImageButton menuButton;
     private final ImageButton resultButton;
 
     public GameScreenHUD(Core game, GameScreen gameScreen) {
@@ -39,6 +36,7 @@ public class GameScreenHUD implements Disposable {
         this.viewport = new FitViewport(Core.V_WIDTH, Core.V_HEIGHT, new OrthographicCamera());
         this.stage = new Stage(viewport, game.batch);
 
+        // HUD Elements
         pauseButton = new ImageButton(game.skin, "pause_button");
         score = new Label(String.format("SCORE: %06d", 0), game.skin);
         score.setPosition(stage.getWidth() - score.getWidth() - 30, stage.getHeight() - score.getHeight() - 10);
@@ -49,6 +47,7 @@ public class GameScreenHUD implements Disposable {
         pauseButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Core.logger.info("Paused");
                 Core.paused = true;
                 disableButtons();
                 pauseMenu.setVisible(true);
@@ -60,25 +59,39 @@ public class GameScreenHUD implements Disposable {
         addScoreButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Core.logger.info("Added 1000 score");
                 gameScreen.increaseScore(1000);
                 setScore(gameScreen.getScore());
             }
         });
 
-        resumeButton = new ImageButton(game.skin, "resume_button");
+        resultButton = new ImageButton(game.skin, "result_button");
+        resultButton.setPosition(stage.getWidth() - resultButton.getWidth() - 10, 10);
+        resultButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Core.logger.info("Switched to ResultScreen");
+                game.setScreen(new ResultScreen(game, gameScreen));
+            }
+        });
+
+        // Pause Menu Elements
+        ImageButton resumeButton = new ImageButton(game.skin, "resume_button");
         resumeButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Core.logger.info("Resumed");
                 Core.paused = false;
                 enableButtons();
                 pauseMenu.setVisible(false);
             }
         });
 
-        retryButton = new ImageButton(game.skin, "retry_button");
+        ImageButton retryButton = new ImageButton(game.skin, "retry_button");
         retryButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Core.logger.info("Retrying level");
                 Core.paused = false;
                 enableButtons();
                 pauseMenu.setVisible(false);
@@ -86,13 +99,15 @@ public class GameScreenHUD implements Disposable {
             }
         });
 
-        menuButton = new ImageButton(game.skin, "menu_button");
+        ImageButton menuButton = new ImageButton(game.skin, "menu_button");
         menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Core.logger.info("Going to MainMenuScreen");
                 Core.paused = false;
                 enableButtons();
                 pauseMenu.setVisible(false);
+                gameScreen.dispose();
                 game.setScreen(new LevelSelectScreen(game));
             }
         });
@@ -109,15 +124,6 @@ public class GameScreenHUD implements Disposable {
         pauseMenu.setMovable(false);
         pauseMenu.setVisible(false);
 
-        resultButton = new ImageButton(game.skin, "result_button");
-        resultButton.setPosition(stage.getWidth() - resultButton.getWidth() - 10, 10);
-        resultButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new ResultScreen(game, gameScreen));
-            }
-        });
-
         stage.addActor(score);
         stage.addActor(pauseButton);
         stage.addActor(addScoreButton);
@@ -127,6 +133,7 @@ public class GameScreenHUD implements Disposable {
     }
 
     public void disableButtons() {
+        Core.logger.info("Disabled Buttons");
         pauseButton.setDisabled(true);
         pauseButton.setTouchable(Touchable.disabled);
 
@@ -138,6 +145,7 @@ public class GameScreenHUD implements Disposable {
     }
 
     public void enableButtons() {
+        Core.logger.info("Enabled Buttons");
         pauseButton.setDisabled(false);
         pauseButton.setTouchable(Touchable.enabled);
 

@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.CosecSecCot.Core;
+import io.github.CosecSecCot.Utility.Level;
 
 import java.util.ArrayList;
 
@@ -22,17 +23,14 @@ import java.util.ArrayList;
 public class LevelSelectScreen implements Screen {
     private final Core game;
     private final Viewport viewport;
-    private Stage stage;
-
-    private final ArrayList<TextButton> levelButtons;
+    private final Stage stage;
 
     public LevelSelectScreen(Core game) {
         this.game = game;
-        this.stage = new Stage();
         this.viewport = new FitViewport(Core.V_WIDTH, Core.V_HEIGHT, new OrthographicCamera());
         this.stage = new Stage(this.viewport, game.batch);
 
-        this.levelButtons = new ArrayList<>();
+        ArrayList<TextButton> levelButtons = new ArrayList<>();
 
         Table table = new Table();
         table.top();
@@ -54,10 +52,11 @@ public class LevelSelectScreen implements Screen {
 
         for (int i = 1; i <= 3; i++) {
             TextButton button = new TextButton(String.format("%d", i), game.skin, "level_0_star");
+            int levelNumber = i;
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    game.setScreen(new GameScreen(game));
+                    game.setScreen(new GameScreen(game, new Level(levelNumber)));
                 }
             });
             levelButtons.add(button);
@@ -101,14 +100,15 @@ public class LevelSelectScreen implements Screen {
 
         ScreenUtils.clear(0.0f, 0.0f, 0.0f, 1f);
         game.batch.begin();
-        game.batch.draw(game.background_img, 0, 0);
+        game.batch.draw(game.atlas.findRegion("background", 1), 0, 0);
         game.batch.end();
         stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        Core.logger.info("Resized LevelSelectScreen to " + width + "x" + height);
+        this.viewport.update(width, height);
     }
 
     @Override

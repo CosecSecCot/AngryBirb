@@ -15,12 +15,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.CosecSecCot.Core;
 
 public class ResultScreen implements Screen {
-    private Core game;
-    private Viewport viewport;
-    private Stage stage;
-
-    private final ImageButton retryButton;
-    private final ImageButton menuButton;
+    private final Core game;
+    private final Viewport viewport;
+    private final Stage stage;
 
     public ResultScreen(Core game, GameScreen gameScreen) {
         this.game = game;
@@ -31,7 +28,7 @@ public class ResultScreen implements Screen {
         table.top();
         table.setFillParent(true);
 
-        retryButton = new ImageButton(game.skin, "retry_button");
+        ImageButton retryButton = new ImageButton(game.skin, "retry_button");
         retryButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -39,7 +36,7 @@ public class ResultScreen implements Screen {
             }
         });
 
-        menuButton = new ImageButton(game.skin, "menu_button");
+        ImageButton menuButton = new ImageButton(game.skin, "menu_button");
         menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -89,7 +86,7 @@ public class ResultScreen implements Screen {
 
         ScreenUtils.clear(0.0f, 0.0f, 0.0f, 1f);
         game.batch.begin();
-        game.batch.draw(game.background_img, 0, 0);
+        game.batch.draw(game.atlas.findRegion("background", 1), 0, 0);
         game.batch.end();
 
         stage.draw();
@@ -98,7 +95,8 @@ public class ResultScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        Core.logger.info("Resized ResultScreen to " + width + "x" + height);
+        this.viewport.update(width, height);
     }
 
     @Override

@@ -3,14 +3,10 @@ package io.github.CosecSecCot.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -24,9 +20,9 @@ import io.github.CosecSecCot.Core;
  * @see Core
  */
 public class MainMenuScreen implements Screen {
-    private Core game;
-    private Viewport viewport;
-    private Stage stage;
+    private final Core game;
+    private final Viewport viewport;
+    private final Stage stage;
 
     /** @param game Instance of {@link Core} */
     public MainMenuScreen(Core game) {
@@ -91,7 +87,7 @@ public class MainMenuScreen implements Screen {
 
         ScreenUtils.clear(0.0f, 0.0f, 0.0f, 1f);
         game.batch.begin();
-        game.batch.draw(game.background_img, 0, 0);
+        game.batch.draw(game.atlas.findRegion("background", 1), 0, 0);
         game.batch.end();
 
         stage.draw();
@@ -100,7 +96,8 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+        Core.logger.info("Resized MainMenuScreen to " + width + "x" + height);
+        this.viewport.update(width, height);
     }
 
     @Override

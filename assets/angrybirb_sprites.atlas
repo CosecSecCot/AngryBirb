@@ -1,0 +1,14 @@
+angrybirb_sprites.png
+size:4096,1024
+filter:Linear,Linear
+repeat:none
+background
+index:1
+bounds:1453,292,1280,720
+background
+index:2
+bounds:1453,92,402,198
+bird_and_pigs
+bounds:2,44,1449,968
+blocks
+bounds:2735,2,1019,1010
