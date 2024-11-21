@@ -1,6 +1,7 @@
 package io.github.CosecSecCot.Utility;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import io.github.CosecSecCot.Sprites.Bird;
 import io.github.CosecSecCot.Sprites.Block;
 import io.github.CosecSecCot.Sprites.Pig;
@@ -75,6 +76,16 @@ public class Level {
         }
     }
 
+    public void placeBirdOnSlingshot() {
+        if (!birds.isEmpty() && slingshot != null) {
+            Bird bird = birds.removeLast(); // Get the last bird in the array
+            Vector2 birdPlacementPosition = slingshot.getBirdPlacementPosition();
+            bird.getBody().setTransform(birdPlacementPosition, 0); // Set bird's position to slingshot
+            slingshot.loadBird(bird);
+        }
+    }
+
+
     public ArrayList<Bird> getBirds() {
         return birds;
     }
@@ -105,6 +116,7 @@ public class Level {
 
     public void setSlingshot(Slingshot slingshot) {
         this.slingshot = slingshot;
+        placeBirdOnSlingshot();
     }
 
     public void setIsComplete(boolean isComplete) {

@@ -1,7 +1,9 @@
 package io.github.CosecSecCot.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -23,7 +25,9 @@ public class GameScreen implements Screen {
     private final Core game;
     private final GameScreenHUD hud;
     private final Viewport viewport;
+    private final Camera camera;
     private final World world;
+    private final InputMultiplexer inputMultiplexer;
     private final Box2DDebugRenderer debugRenderer;
     private final Level level;
     private int score;
@@ -35,7 +39,7 @@ public class GameScreen implements Screen {
         this.score = 0;
         this.hud = new GameScreenHUD(game, this);
 
-        OrthographicCamera camera = new OrthographicCamera();
+        this.camera = new OrthographicCamera();
         this.viewport = new FitViewport(Core.V_WIDTH, Core.V_HEIGHT, camera);
 
         // Make gameCamera centered in the middle of the screen
@@ -44,6 +48,9 @@ public class GameScreen implements Screen {
         // Box2D setup
         this.world = new World(new Vector2(0, -10f), true);
         this.debugRenderer = new Box2DDebugRenderer();
+
+        // Input
+        inputMultiplexer = new InputMultiplexer();
 
         // Ground
         BodyDef groundBodyDef = new BodyDef();
@@ -100,8 +107,11 @@ public class GameScreen implements Screen {
                 this.level.addBlock(new Wood(this.world, this.game, 1080, 320, 10));
             }
         }
-        Slingshot slingshot = new Slingshot(this.world, this.game, 300, 177);
+        Slingshot slingshot = new Slingshot(this.world, this.game, 300, 177, this.camera);
         this.level.setSlingshot(slingshot);
+
+        inputMultiplexer.addProcessor(hud.getStage()); // Handles UI input
+        inputMultiplexer.addProcessor(slingshot); // Handles slingshot input
     }
 
     public void restartLevel() {
@@ -129,14 +139,7 @@ public class GameScreen implements Screen {
     public void show() {
         this.level.applyAllRotations();
 //        this.level.getBirds().getLast().getBody().applyLinearImpulse(new Vector2(110000, 150000), level.getBirds().getLast().getBody().getWorldCenter(), true);
-    }
-
-    /**
-     * Handles Input every frame
-     *
-     * @param deltaTime Delta time.
-     */
-    public void handleInput(float deltaTime) {
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     /**
@@ -145,8 +148,6 @@ public class GameScreen implements Screen {
      * @param deltaTime Delta time.
      */
     public void update(float deltaTime) {
-        handleInput(deltaTime);
-
         // how much time between physics calculation
         this.world.step(1 / 60f, 10, 5);
 
@@ -156,7 +157,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.input.setInputProcessor(this.hud.getStage());
         if (!Core.paused) {
             this.update(delta);
         }
@@ -169,7 +169,7 @@ public class GameScreen implements Screen {
         this.level.draw(this.game.batch);
         this.game.batch.end();
 
-//        debugRenderer.render(world, camera.combined);
+        debugRenderer.render(world, camera.combined);
         this.hud.getStage().draw();
     }
 
