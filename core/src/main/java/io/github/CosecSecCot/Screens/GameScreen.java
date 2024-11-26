@@ -32,6 +32,8 @@ public class GameScreen implements Screen {
     private final Box2DDebugRenderer debugRenderer;
     private final Level level;
     private int score;
+    private static final float TIME_TO_RESULT_SCREEN = 2f;
+    private float resultTimer = 0f;
 
     /** @param game Instance of {@link Core} */
     public GameScreen(Core game, Level level) {
@@ -154,7 +156,10 @@ public class GameScreen implements Screen {
         this.hud.setScore(this.score);
 
         if (this.level.isComplete()) {
-            game.setScreen(new ResultScreen(game, this, this.level.won()));
+            resultTimer += deltaTime;
+            if (resultTimer > TIME_TO_RESULT_SCREEN) {
+                game.setScreen(new ResultScreen(game, this, this.level.won()));
+            }
         }
     }
 
