@@ -160,9 +160,11 @@ public class Level {
                 entitiesToDestroy.add(pig);
                 this.score += pig.getPoints();
             }
-        for (Block block : blocks) if (block.isDestroyed()) {
-            entitiesToDestroy.add(block);
-        }
+        for (Block block : blocks)
+            if (block.isDestroyed()) {
+                entitiesToDestroy.add(block);
+                this.score += block.getPoints();
+            }
         for (Bird bird : birds) if (bird.isDestroyed()) entitiesToDestroy.add(bird);
 
         for (Entity entity : entitiesToDestroy) {

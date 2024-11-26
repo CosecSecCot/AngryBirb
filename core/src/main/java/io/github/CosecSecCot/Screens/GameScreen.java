@@ -76,10 +76,10 @@ public class GameScreen implements Screen {
                 this.level.addBird(new Red(this.world, this.game, 220, 170));
                 this.level.addPig(new NormalPig(this.world, this.game, 800, 170));
                 this.level.addPig(new NormalPig(this.world, this.game, 860, 170));
-                this.level.addBlock(new Wood(this.world, this.game, 740, 240, 10, 90));
-                this.level.addBlock(new Wood(this.world, this.game, 920, 240, 10, 90));
-                this.level.addBlock(new Wood(this.world, this.game, 740, 320, 10));
-                this.level.addBlock(new Wood(this.world, this.game, 920, 320, 10));
+                this.level.addBlock(new Wood(this.world, this.game, 740, 240, 90));
+                this.level.addBlock(new Wood(this.world, this.game, 920, 240, 90));
+                this.level.addBlock(new Wood(this.world, this.game, 740, 320));
+                this.level.addBlock(new Wood(this.world, this.game, 920, 320));
             }
             case 2 -> {
                 this.level.addBird(new Red(this.world, this.game, 100, 170));
@@ -88,12 +88,12 @@ public class GameScreen implements Screen {
                 this.level.addPig(new NormalPig(this.world, this.game, 820, 170));
                 this.level.addPig(new HelmetPig(this.world, this.game, 995, 200));
                 this.level.addPig(new NormalPig(this.world, this.game, 1140, 170));
-                this.level.addBlock(new Glass(this.world, this.game, 740, 240, 10, 90));
-                this.level.addBlock(new Glass(this.world, this.game, 740, 320, 10));
-                this.level.addBlock(new Wood(this.world, this.game, 910, 240, 10, 90));
-                this.level.addBlock(new Wood(this.world, this.game, 910, 320, 10));
-                this.level.addBlock(new Glass(this.world, this.game, 1080, 240, 10, 90));
-                this.level.addBlock(new Glass(this.world, this.game, 1080, 320, 10));
+                this.level.addBlock(new Glass(this.world, this.game, 740, 240, 90));
+                this.level.addBlock(new Glass(this.world, this.game, 740, 320));
+                this.level.addBlock(new Wood(this.world, this.game, 910, 240, 90));
+                this.level.addBlock(new Wood(this.world, this.game, 910, 320));
+                this.level.addBlock(new Glass(this.world, this.game, 1080, 240, 90));
+                this.level.addBlock(new Glass(this.world, this.game, 1080, 320));
             }
             case 3 -> {
                 this.level.addBird(new Red(this.world, this.game, 100, 170));
@@ -102,12 +102,12 @@ public class GameScreen implements Screen {
                 this.level.addPig(new HelmetPig(this.world, this.game, 820, 200));
                 this.level.addPig(new KingPig(this.world, this.game, 995, 200));
                 this.level.addPig(new NormalPig(this.world, this.game, 1140, 170));
-                this.level.addBlock(new Stone(this.world, this.game, 740, 240, 10, 90));
-                this.level.addBlock(new Stone(this.world, this.game, 740, 320, 10));
-                this.level.addBlock(new Stone(this.world, this.game, 910, 240, 10, 90));
-                this.level.addBlock(new Stone(this.world, this.game, 910, 320, 10));
-                this.level.addBlock(new Wood(this.world, this.game, 1080, 240, 10, 90));
-                this.level.addBlock(new Wood(this.world, this.game, 1080, 320, 10));
+                this.level.addBlock(new Stone(this.world, this.game, 740, 240, 90));
+                this.level.addBlock(new Stone(this.world, this.game, 740, 320));
+                this.level.addBlock(new Stone(this.world, this.game, 910, 240, 90));
+                this.level.addBlock(new Stone(this.world, this.game, 910, 320));
+                this.level.addBlock(new Wood(this.world, this.game, 1080, 240, 90));
+                this.level.addBlock(new Wood(this.world, this.game, 1080, 320));
             }
         }
         Slingshot slingshot = new Slingshot(this.world, this.game, 300, 177, this.camera);

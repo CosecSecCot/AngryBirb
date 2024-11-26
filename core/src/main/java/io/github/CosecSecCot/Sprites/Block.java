@@ -39,6 +39,10 @@ public abstract class Block extends Entity {
         this.body = world.createBody(bodyDef);
     }
 
+    public int getPoints() {
+        return this.points;
+    }
+
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
