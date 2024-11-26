@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.CosecSecCot.Core;
 import io.github.CosecSecCot.Screens.GameScreen;
 import io.github.CosecSecCot.Screens.LevelSelectScreen;
-import io.github.CosecSecCot.Screens.ResultScreen;
+//import io.github.CosecSecCot.Screens.ResultScreen;
 
 /**
  * HUD for the game.
@@ -27,8 +27,7 @@ public class GameScreenHUD implements Disposable {
     private final Label score;
     private final ImageButton pauseButton;
     private final Window pauseMenu;
-    private final ImageButton addScoreButton;
-    private final ImageButton resultButton;
+//    private final ImageButton resultButton;
 
     public GameScreenHUD(Core game, GameScreen gameScreen) {
         this.viewport = new FitViewport(Core.V_WIDTH, Core.V_HEIGHT, new OrthographicCamera());
@@ -52,26 +51,15 @@ public class GameScreenHUD implements Disposable {
             }
         });
 
-        addScoreButton = new ImageButton(game.skin, "add_score");
-        addScoreButton.setPosition(stage.getWidth() - addScoreButton.getWidth() - 30, stage.getHeight() - score.getHeight() - addScoreButton.getHeight() - 30);
-        addScoreButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Core.logger.info("Added 1000 score");
-                gameScreen.increaseScore(1000);
-                setScore(gameScreen.getScore());
-            }
-        });
-
-        resultButton = new ImageButton(game.skin, "result_button");
-        resultButton.setPosition(stage.getWidth() - resultButton.getWidth() - 10, 10);
-        resultButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Core.logger.info("Switched to ResultScreen");
-                game.setScreen(new ResultScreen(game, gameScreen));
-            }
-        });
+//        resultButton = new ImageButton(game.skin, "result_button");
+//        resultButton.setPosition(stage.getWidth() - resultButton.getWidth() - 10, 10);
+//        resultButton.addListener(new ClickListener() {
+//            @Override
+//            public void clicked(InputEvent event, float x, float y) {
+//                Core.logger.info("Switched to ResultScreen");
+//                game.setScreen(new ResultScreen(game, gameScreen));
+//            }
+//        });
 
         // Pause Menu Elements
         ImageButton resumeButton = new ImageButton(game.skin, "resume_button");
@@ -124,8 +112,7 @@ public class GameScreenHUD implements Disposable {
 
         this.stage.addActor(this.score);
         this.stage.addActor(pauseButton);
-        this.stage.addActor(addScoreButton);
-        this.stage.addActor(resultButton);
+//        this.stage.addActor(resultButton);
         this.stage.addActor(pauseMenu);
 //        stage.setDebugAll(true);
     }
@@ -135,11 +122,8 @@ public class GameScreenHUD implements Disposable {
         pauseButton.setDisabled(true);
         pauseButton.setTouchable(Touchable.disabled);
 
-        addScoreButton.setDisabled(true);
-        addScoreButton.setTouchable(Touchable.disabled);
-
-        resultButton.setDisabled(true);
-        resultButton.setTouchable(Touchable.disabled);
+//        resultButton.setDisabled(true);
+//        resultButton.setTouchable(Touchable.disabled);
     }
 
     public void enableButtons() {
@@ -147,11 +131,8 @@ public class GameScreenHUD implements Disposable {
         pauseButton.setDisabled(false);
         pauseButton.setTouchable(Touchable.enabled);
 
-        addScoreButton.setDisabled(false);
-        addScoreButton.setTouchable(Touchable.enabled);
-
-        resultButton.setDisabled(false);
-        resultButton.setTouchable(Touchable.enabled);
+//        resultButton.setDisabled(false);
+//        resultButton.setTouchable(Touchable.enabled);
     }
 
     public Stage getStage() {

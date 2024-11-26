@@ -14,7 +14,9 @@ public class Level {
     private final ArrayList<Block> blocks;
     private final ArrayList<Entity> entitiesToDestroy;
     private Slingshot slingshot;
+    private int score;
     private boolean isComplete;
+    private boolean win;
     private int currentBirdIndex;
 
     public Level(int levelNumber) {
@@ -23,7 +25,9 @@ public class Level {
         this.pigs = new ArrayList<>();
         this.blocks = new ArrayList<>();
         this.entitiesToDestroy = new ArrayList<>();
+        this.score = 0;
         this.isComplete = false;
+        this.win = false;
         this.currentBirdIndex = -1;
     }
 
@@ -41,6 +45,7 @@ public class Level {
         if (pigs.isEmpty() || allBirdsDestroyed) {
 //            Core.logger.info("LEVEL COMPLETE!");
             this.isComplete = true;
+            this.win = pigs.isEmpty();
         }
 
         for (Pig pig : pigs) pig.update(deltaTime);
@@ -116,8 +121,16 @@ public class Level {
         return blocks;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     public boolean isComplete() {
         return isComplete;
+    }
+
+    public boolean won() {
+        return win;
     }
 
     public void addBird(Bird bird) {
@@ -142,8 +155,14 @@ public class Level {
     }
 
     private void processDestructionQueue() {
-        for (Pig pig : pigs) if (pig.isDestroyed()) entitiesToDestroy.add(pig);
-        for (Block block : blocks) if (block.isDestroyed()) entitiesToDestroy.add(block);
+        for (Pig pig : pigs)
+            if (pig.isDestroyed()) {
+                entitiesToDestroy.add(pig);
+                this.score += pig.getPoints();
+            }
+        for (Block block : blocks) if (block.isDestroyed()) {
+            entitiesToDestroy.add(block);
+        }
         for (Bird bird : birds) if (bird.isDestroyed()) entitiesToDestroy.add(bird);
 
         for (Entity entity : entitiesToDestroy) {

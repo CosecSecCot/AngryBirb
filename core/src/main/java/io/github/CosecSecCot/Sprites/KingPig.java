@@ -8,6 +8,7 @@ import io.github.CosecSecCot.Core;
 public class KingPig extends Pig {
     public KingPig(World world, Core game, int x_pos, int y_pos) {
         super(world, game, "bird_and_pigs", x_pos, y_pos, 41, 2, 126, 152, 0, -20, 12);
+        this.points = 1000;
     }
 
     @Override

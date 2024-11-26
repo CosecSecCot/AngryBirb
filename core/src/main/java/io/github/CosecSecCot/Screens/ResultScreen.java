@@ -19,7 +19,7 @@ public class ResultScreen implements Screen {
     private final Viewport viewport;
     private final Stage stage;
 
-    public ResultScreen(Core game, GameScreen gameScreen) {
+    public ResultScreen(Core game, GameScreen gameScreen, boolean won) {
         this.game = game;
         this.viewport = new FitViewport(Core.V_WIDTH, Core.V_HEIGHT, new OrthographicCamera());
         this.stage = new Stage(viewport, this.game.batch);
@@ -44,7 +44,7 @@ public class ResultScreen implements Screen {
             }
         });
 
-        Label headingLabel = new Label("RESULT", game.skin, "title");
+        Label headingLabel = new Label(won ? "YOU WIN" : "YOU LOSE", game.skin, "title");
         Label scoreLabel = new Label(String.format("SCORE: %d", gameScreen.getScore()), game.skin, "result");
         table.add(headingLabel).expandX().colspan(2).center().pad(64);
         table.row();

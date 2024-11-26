@@ -122,10 +122,6 @@ public class GameScreen implements Screen {
         this.game.setScreen(new GameScreen(game, new Level(this.level.LEVEL_NUMBER)));
     }
 
-    public void increaseScore(int amount) {
-        this.score += amount;
-    }
-
     public int getScore() {
         return this.score;
     }
@@ -154,7 +150,12 @@ public class GameScreen implements Screen {
         this.world.step(1 / 60f, 10, 5);
 
         this.level.update(deltaTime);
+        this.score = this.level.getScore();
         this.hud.setScore(this.score);
+
+        if (this.level.isComplete()) {
+            game.setScreen(new ResultScreen(game, this, this.level.won()));
+        }
     }
 
     @Override

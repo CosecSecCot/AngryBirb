@@ -11,6 +11,10 @@ public abstract class Pig extends Entity {
         body.setUserData(this);
     }
 
+    public int getPoints() {
+        return this.points;
+    }
+
     @Override
     protected void define() {
         BodyDef bodyDef = new BodyDef();
