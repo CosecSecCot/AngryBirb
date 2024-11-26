@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.*;
@@ -20,7 +21,7 @@ public class Slingshot extends InputAdapter {
     private Bird currentBird;
     private float launchVelocity;
     private final float MAX_PULL_DISTANCE = 100f;
-    private final float MIN_PULL_DISTANCE = 0f;
+    private final float MIN_PULL_DISTANCE = 40f;
     private float pullDistance;
     private Vector2 rubberBandEndCoordinate;
     private final World world;
@@ -71,7 +72,8 @@ public class Slingshot extends InputAdapter {
      * @param deltaTime Delta time.
      */
     public void update(float deltaTime) {
-//        back.setPosition(body.getPosition().x - back.getWidth()/2 + xOffset, body.getPosition().y - back.getHeight()/2 - yOffset);
+        if (currentBird != null)
+            currentBird.update(deltaTime);
     }
 
     /**
@@ -87,7 +89,7 @@ public class Slingshot extends InputAdapter {
         this.back.draw(batch);
 
         if (currentBird != null) {
-            currentBird.draw(batch); // Draw the bird between the slingshot parts
+            currentBird.draw(batch);
         }
 
         this.front.draw(batch);
@@ -127,19 +129,22 @@ public class Slingshot extends InputAdapter {
 
     public Vector2 getBirdPlacementPosition() {
         // Calculate the bird's resting position between the poles
-        return new Vector2(position.x, position.y + getSize().y / 2); // Adjust offset as needed
+        return new Vector2(position.x, position.y + getSize().y / 2);
+    }
+
+    public void setCurrentBird(Bird currentBird) {
+        this.currentBird = currentBird;
     }
 
     public void loadBird(Bird bird) {
-        this.currentBird = bird; // Set the loaded bird
-        bird.getBody().setActive(false); // Optional: Disable bird physics while on the slingshot
+        this.currentBird = bird;
+        bird.getBody().setActive(false);
 
         Vector2 bodyPosition = bird.getBody().getPosition();
         bird.setPosition(bodyPosition.x - bird.getSize().x / 2, bodyPosition.y - bird.getSize().y / 2);
     }
 
     private boolean isNearSlingshot(float touchX, float touchY) {
-        // Assuming slingshot's position and size are known
         float slingshotX = position.x;
         float slingshotY = position.y;
         float slingshotWidth = getSize().x;
@@ -195,25 +200,67 @@ public class Slingshot extends InputAdapter {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if (currentBird == null) return false;
         if (isDragging) {
             isDragging = false;
         }
-        Core.logger.info("touch Up");
-        Core.logger.info("Bird wake: " + currentBird.getBody().isAwake());
-        currentBird.getBody().applyLinearImpulse(new Vector2(110000, 150000), currentBird.getBody().getWorldCenter(), true);
-        Core.logger.info("Bird wake After: " + currentBird.getBody().isAwake());
+
+        // Calculate the pull distance and direction
+        Vector2 birdPosition = currentBird.getBody().getPosition();
+        Vector2 slingshotPosition = getBirdPlacementPosition();
+        Vector2 pullVector = slingshotPosition.cpy().sub(birdPosition); // Direction of pull
+
+        float pullDistance = pullVector.len();
+
+        if (pullDistance < MIN_PULL_DISTANCE) {
+            // If the pull distance is less than the minimum, reset bird to the original position
+            Core.logger.info("Pull too short, resetting bird to original position.");
+            birdPosition.set(slingshotPosition);
+            currentBird.setPosition(
+                birdPosition.x - currentBird.getSize().x / 2,
+                birdPosition.y - currentBird.getSize().y / 2
+            );
+            currentBird.getBody().setTransform(birdPosition, 0); // Sync Box2D body
+        } else {
+            // If the pull distance is sufficient, launch the bird
+            Core.logger.info("Launching bird!");
+
+            currentBird.getBody().setActive(true);
+
+            Core.logger.info("Body position: " + currentBird.getBody().getPosition());
+
+            // Normalize the pull vector to get the direction, then scale it for impulse
+            pullVector.nor().scl(currentBird.getBody().getMass() * MathUtils.clamp(pullDistance, MIN_PULL_DISTANCE, MAX_PULL_DISTANCE));
+
+            // Apply an impulse to the bird's body in the direction of the pull
+            currentBird.getBody().applyLinearImpulse(
+                pullVector,
+                currentBird.getBody().getWorldCenter(),
+                true
+            );
+
+            Core.logger.info("Impulse applied: " + pullVector);
+        }
+
         return true;
     }
 
+    /**
+     * Checks if the current bird has been launched successfully.
+     *
+     * @return True if the bird is launched, false otherwise.
+     */
+    public boolean birdHasBeenLaunchedSuccessfully() {
+        if (currentBird == null || currentBird.isDestroyed()) return false;
+
+        return currentBird.getBody().getPosition().dst(getBirdPlacementPosition()) > MAX_PULL_DISTANCE + 10;
+    }
+
     public void destroy() {
-        assert world != null;
-        if (body != null) {
+        if (world != null && body != null) {
             this.world.destroyBody(body);
             this.body = null;
         }
-
-        this.back.getTexture().dispose();
-        this.front.getTexture().dispose();
     }
 
 }

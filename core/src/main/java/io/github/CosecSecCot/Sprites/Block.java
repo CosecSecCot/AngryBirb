@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import io.github.CosecSecCot.Core;
 
 public abstract class Block extends Entity {
-    protected double damage;
+    protected double damage = 10;
     protected int points;
     protected double resistance;
     protected double hitsToDestroy;
@@ -14,18 +14,22 @@ public abstract class Block extends Entity {
     public Block(World world, Core game, String sprite_region, int x_pos, int y_pos, int sprite_x_pos, int sprite_y_pos, int width, int height, float xOffset, float yOffset, double health) {
         super(world, game, sprite_region, x_pos, y_pos, sprite_x_pos, sprite_y_pos, width, height, xOffset, yOffset, health);
         this.rotationAngle = 0f;
+        body.setUserData(this);
     }
 
     public Block(World world, Core game, String sprite_region, int x_pos, int y_pos, int sprite_x_pos, int sprite_y_pos, int width, int height, float xOffset, float yOffset, double health, float rotationAngle) {
         super(world, game, sprite_region, x_pos, y_pos, sprite_x_pos, sprite_y_pos, width, height, xOffset, yOffset, health);
         this.rotationAngle = rotationAngle;
+        body.setUserData(this);
     }
 
     public void applyRotation() {
         this.getBody().setTransform(this.getBody().getPosition(), (float)Math.toRadians(rotationAngle));
     }
 
-    public void dealDamage() {}
+    public double getDamage() {
+        return damage;
+    }
 
     @Override
     protected void define() {

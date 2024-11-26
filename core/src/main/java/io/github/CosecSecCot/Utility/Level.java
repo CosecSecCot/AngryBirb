@@ -2,10 +2,8 @@ package io.github.CosecSecCot.Utility;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import io.github.CosecSecCot.Sprites.Bird;
-import io.github.CosecSecCot.Sprites.Block;
-import io.github.CosecSecCot.Sprites.Pig;
-import io.github.CosecSecCot.Sprites.Slingshot;
+import io.github.CosecSecCot.Core;
+import io.github.CosecSecCot.Sprites.*;
 
 import java.util.ArrayList;
 
@@ -14,15 +12,19 @@ public class Level {
     private final ArrayList<Bird> birds;
     private final ArrayList<Pig> pigs;
     private final ArrayList<Block> blocks;
+    private final ArrayList<Entity> entitiesToDestroy;
     private Slingshot slingshot;
     private boolean isComplete;
+    private int currentBirdIndex;
 
     public Level(int levelNumber) {
         this.LEVEL_NUMBER = levelNumber;
         this.birds = new ArrayList<>();
         this.pigs = new ArrayList<>();
         this.blocks = new ArrayList<>();
+        this.entitiesToDestroy = new ArrayList<>();
         this.isComplete = false;
+        this.currentBirdIndex = -1;
     }
 
     /**
@@ -31,21 +33,30 @@ public class Level {
      * @param deltaTime Delta time.
      */
     public void update(float deltaTime) {
-        if (birds.isEmpty() || pigs.isEmpty()) {
+        this.processDestructionQueue();
+
+        boolean allBirdsDestroyed = true;
+        for (Bird bird : birds) allBirdsDestroyed &= bird.isDestroyed();
+
+        if (pigs.isEmpty() || allBirdsDestroyed) {
+//            Core.logger.info("LEVEL COMPLETE!");
             this.isComplete = true;
-            return;
         }
 
-        for (Bird bird : birds) {
-            bird.update(deltaTime);
-        }
-        for (Pig pig : pigs) {
-            pig.update(deltaTime);
-        }
-        for (Block block : blocks) {
-            block.update(deltaTime);
-        }
+        for (Pig pig : pigs) pig.update(deltaTime);
+        for (Block block : blocks) block.update(deltaTime);
+        for (Bird bird : birds)
+            if (!bird.isDestroyed())
+                bird.update(deltaTime);
+
         slingshot.update(deltaTime);
+        if (slingshot.birdHasBeenLaunchedSuccessfully()) {
+            Core.logger.info("Started Bird destroy timer!");
+            slingshot.getCurrentBird().startDestroyTimer();
+            Core.logger.info("Bird successfully launched. Loading next bird...");
+            Core.logger.info("Birds left: " + birds.size());
+            placeBirdOnSlingshot();
+        }
     }
 
     /**
@@ -58,15 +69,12 @@ public class Level {
      * @param batch {@link SpriteBatch} of the game.
      */
     public void draw(SpriteBatch batch) {
-        for (Pig pig : pigs) {
-            pig.draw(batch);
-        }
-        for (Block block : blocks) {
-            block.draw(batch);
-        }
-        for (Bird bird : birds) {
-            bird.draw(batch);
-        }
+        for (Pig pig : pigs) pig.draw(batch);
+        for (Block block : blocks) block.draw(batch);
+        for (Bird bird : birds)
+            if (!bird.isDestroyed())
+                bird.draw(batch);
+
         slingshot.draw(batch);
     }
 
@@ -76,12 +84,22 @@ public class Level {
         }
     }
 
+    /**
+     * Places the next bird in the array on the slingshot.
+     */
     public void placeBirdOnSlingshot() {
-        if (!birds.isEmpty() && slingshot != null) {
-            Bird bird = birds.removeLast(); // Get the last bird in the array
+        if (slingshot == null) return;
+
+        currentBirdIndex++; // Move to the next bird
+        if (currentBirdIndex < birds.size()) {
+            Bird bird = birds.get(currentBirdIndex); // Get the current bird by index
             Vector2 birdPlacementPosition = slingshot.getBirdPlacementPosition();
-            bird.getBody().setTransform(birdPlacementPosition, 0); // Set bird's position to slingshot
+            bird.getBody().setTransform(birdPlacementPosition, 0); // Set body's position to slingshot
             slingshot.loadBird(bird);
+        } else {
+            // No more birds left to place
+            currentBirdIndex = -1;
+            slingshot.setCurrentBird(null);
         }
     }
 
@@ -121,6 +139,23 @@ public class Level {
 
     public void setIsComplete(boolean isComplete) {
         this.isComplete = isComplete;
+    }
+
+    private void processDestructionQueue() {
+        for (Pig pig : pigs) if (pig.isDestroyed()) entitiesToDestroy.add(pig);
+        for (Block block : blocks) if (block.isDestroyed()) entitiesToDestroy.add(block);
+        for (Bird bird : birds) if (bird.isDestroyed()) entitiesToDestroy.add(bird);
+
+        for (Entity entity : entitiesToDestroy) {
+            entity.destroy();
+        }
+
+        // Remove from level
+        for (int i = blocks.size() - 1; i >= 0; i--) if (blocks.get(i).isDestroyed()) blocks.remove(i);
+        for (int i = pigs.size() - 1; i >= 0; i--) if (pigs.get(i).isDestroyed()) pigs.remove(i);
+
+        // reset queue
+        entitiesToDestroy.clear();
     }
 
     public void destroy() {

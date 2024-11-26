@@ -4,8 +4,9 @@ import com.badlogic.gdx.physics.box2d.*;
 import io.github.CosecSecCot.Core;
 
 public class Red extends Bird {
-    public Red(World world, Core game, int x_pos, int y_pos, double health) {
-        super(world, game, "bird_and_pigs", x_pos, y_pos, 902, 797, 48, 48, -3, -2, health);
+    public Red(World world, Core game, int x_pos, int y_pos) {
+        super(world, game, "bird_and_pigs", x_pos, y_pos, 902, 797, 48, 48, -3, -2, 20);
+        this.damage = 10;
     }
 
     @Override

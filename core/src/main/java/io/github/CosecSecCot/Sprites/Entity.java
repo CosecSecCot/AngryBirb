@@ -9,11 +9,13 @@ import io.github.CosecSecCot.Core;
 public abstract class Entity extends Sprite {
     protected final Vector2 position;
     private final Vector2 size;
-    private double health;
+    private final double health;
+    private double currentHealth;
     protected final World world;
     protected Body body;
     private float xOffset;
     private float yOffset;
+    private boolean isDestroyed;
 
     public Entity(World world, Core game, String sprite_region, int x_pos, int y_pos, int sprite_x_pos, int sprite_y_pos, int width, int height, float xOffset, float yOffset, double health) {
         super(game.atlas.findRegion(sprite_region));
@@ -23,8 +25,10 @@ public abstract class Entity extends Sprite {
         this.position = new Vector2(x_pos, y_pos);
         this.size = new Vector2(width, height);
         this.health = health;
+        this.currentHealth = health;
         this.xOffset = xOffset;
         this.yOffset = yOffset;
+        this.isDestroyed = false;
 
         this.define();
 
@@ -45,13 +49,21 @@ public abstract class Entity extends Sprite {
      */
     public void update(float deltaTime) {
         this.setPosition(body.getPosition().x - this.getWidth()/2 + xOffset, body.getPosition().y - this.getHeight()/2 - yOffset);
-        if (health == 0)
-            destroy();
     }
 
-    public void takeDamage(float amount) {
+    public void takeDamage(double amount) {
         assert amount > 0;
-        this.health = Math.max(0, this.health - amount);
+        this.currentHealth = Math.max(0, this.currentHealth - amount);
+        if (this.currentHealth <= 0)
+            this.markForDestruction();
+    }
+
+    public double getCurrentHealth() {
+        return currentHealth;
+    }
+
+    public double getMaxHealth() {
+        return health;
     }
 
     public Body getBody() {
@@ -66,6 +78,10 @@ public abstract class Entity extends Sprite {
         return position;
     }
 
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
+
     public void setXOffset(float xOffset) {
         this.xOffset = xOffset;
     }
@@ -74,13 +90,17 @@ public abstract class Entity extends Sprite {
         this.yOffset = yOffset;
     }
 
+    public void markForDestruction() {
+        if (!isDestroyed) {
+            isDestroyed = true;
+        }
+    }
+
     public void destroy() {
-        assert this.world != null;
-        if (this.body != null) {
+        if (this.world != null && this.body != null) {
             this.world.destroyBody(body);
             this.body = null;
+            this.isDestroyed = true;
         }
-
-        this.getTexture().dispose();
     }
 }

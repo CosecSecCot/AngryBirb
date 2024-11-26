@@ -5,8 +5,9 @@ import com.badlogic.gdx.physics.box2d.*;
 import io.github.CosecSecCot.Core;
 
 public class Chuck extends Bird {
-    public Chuck(World world, Core game, int x_pos, int y_pos, double health) {
-        super(world, game, "bird_and_pigs", x_pos, y_pos, 668, 879, 58, 54, -3, 0, health);
+    public Chuck(World world, Core game, int x_pos, int y_pos) {
+        super(world, game, "bird_and_pigs", x_pos, y_pos, 668, 879, 58, 54, -3, 0, 20);
+        this.damage = 10;
     }
 
     @Override

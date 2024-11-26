@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.CosecSecCot.Core;
 import io.github.CosecSecCot.Scenes.GameScreenHUD;
 import io.github.CosecSecCot.Sprites.*;
+import io.github.CosecSecCot.Utility.CollisionHandler;
 import io.github.CosecSecCot.Utility.Level;
 
 /**
@@ -47,6 +48,8 @@ public class GameScreen implements Screen {
 
         // Box2D setup
         this.world = new World(new Vector2(0, -10f), true);
+        CollisionHandler collisionHandler = new CollisionHandler();
+        this.world.setContactListener(collisionHandler);
         this.debugRenderer = new Box2DDebugRenderer();
 
         // Input
@@ -68,23 +71,23 @@ public class GameScreen implements Screen {
         // Level
         switch (this.level.LEVEL_NUMBER) {
             case 1 -> {
-                this.level.addBird(new Red(this.world, this.game, 100, 170, 10));
-                this.level.addBird(new Red(this.world, this.game, 160, 170, 10));
-                this.level.addBird(new Red(this.world, this.game, 220, 170, 10));
-                this.level.addPig(new NormalPig(this.world, this.game, 800, 170, 10));
-                this.level.addPig(new NormalPig(this.world, this.game, 860, 170, 10));
+                this.level.addBird(new Red(this.world, this.game, 100, 170));
+                this.level.addBird(new Red(this.world, this.game, 160, 170));
+                this.level.addBird(new Red(this.world, this.game, 220, 170));
+                this.level.addPig(new NormalPig(this.world, this.game, 800, 170));
+                this.level.addPig(new NormalPig(this.world, this.game, 860, 170));
                 this.level.addBlock(new Wood(this.world, this.game, 740, 240, 10, 90));
                 this.level.addBlock(new Wood(this.world, this.game, 920, 240, 10, 90));
                 this.level.addBlock(new Wood(this.world, this.game, 740, 320, 10));
                 this.level.addBlock(new Wood(this.world, this.game, 920, 320, 10));
             }
             case 2 -> {
-                this.level.addBird(new Red(this.world, this.game, 100, 170, 10));
-                this.level.addBird(new Chuck(this.world, this.game, 160, 170, 10));
-                this.level.addBird(new Red(this.world, this.game, 230, 170, 10));
-                this.level.addPig(new NormalPig(this.world, this.game, 820, 170, 10));
-                this.level.addPig(new HelmetPig(this.world, this.game, 995, 200, 10));
-                this.level.addPig(new NormalPig(this.world, this.game, 1140, 170, 10));
+                this.level.addBird(new Red(this.world, this.game, 100, 170));
+                this.level.addBird(new Chuck(this.world, this.game, 160, 170));
+                this.level.addBird(new Red(this.world, this.game, 230, 170));
+                this.level.addPig(new NormalPig(this.world, this.game, 820, 170));
+                this.level.addPig(new HelmetPig(this.world, this.game, 995, 200));
+                this.level.addPig(new NormalPig(this.world, this.game, 1140, 170));
                 this.level.addBlock(new Glass(this.world, this.game, 740, 240, 10, 90));
                 this.level.addBlock(new Glass(this.world, this.game, 740, 320, 10));
                 this.level.addBlock(new Wood(this.world, this.game, 910, 240, 10, 90));
@@ -93,12 +96,12 @@ public class GameScreen implements Screen {
                 this.level.addBlock(new Glass(this.world, this.game, 1080, 320, 10));
             }
             case 3 -> {
-                this.level.addBird(new Red(this.world, this.game, 100, 170, 10));
-                this.level.addBird(new Chuck(this.world, this.game, 160, 170, 10));
-                this.level.addBird(new Bomb(this.world, this.game, 230, 170, 10));
-                this.level.addPig(new HelmetPig(this.world, this.game, 820, 200, 10));
-                this.level.addPig(new KingPig(this.world, this.game, 995, 200, 10));
-                this.level.addPig(new NormalPig(this.world, this.game, 1140, 170, 10));
+                this.level.addBird(new Red(this.world, this.game, 100, 170));
+                this.level.addBird(new Chuck(this.world, this.game, 160, 170));
+                this.level.addBird(new Bomb(this.world, this.game, 230, 170));
+                this.level.addPig(new HelmetPig(this.world, this.game, 820, 200));
+                this.level.addPig(new KingPig(this.world, this.game, 995, 200));
+                this.level.addPig(new NormalPig(this.world, this.game, 1140, 170));
                 this.level.addBlock(new Stone(this.world, this.game, 740, 240, 10, 90));
                 this.level.addBlock(new Stone(this.world, this.game, 740, 320, 10));
                 this.level.addBlock(new Stone(this.world, this.game, 910, 240, 10, 90));
@@ -138,7 +141,6 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         this.level.applyAllRotations();
-//        this.level.getBirds().getLast().getBody().applyLinearImpulse(new Vector2(110000, 150000), level.getBirds().getLast().getBody().getWorldCenter(), true);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
