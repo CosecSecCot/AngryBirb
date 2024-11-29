@@ -134,10 +134,11 @@ public class GameScreen implements Screen {
     public void saveLevel() {
         String savePath = "level_%d.dat".formatted(this.level.LEVEL_NUMBER);
         LevelSave saveData = new LevelSave();
+        saveData.score = this.score;
 
         // Iterate over all birds and save their state
         for (Bird bird : this.level.getBirds()) { // Assuming you have a list of birds
-            if (!bird.isDestroyed()) {
+            if (!bird.isLauched()) {
                 String type;
                 if (bird instanceof Red) {
                     type = "Red";
@@ -210,9 +211,11 @@ public class GameScreen implements Screen {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(savePath))) {
             LevelSave saveData = (LevelSave) ois.readObject();
 
-            // Restart Level Kind of
             Level level = new Level(this.level.LEVEL_NUMBER);
             World newWorld = new World(new Vector2(0, -10), true);
+
+            // Set score
+            level.setScore(saveData.score);
 
             // Restore birds' states
             for (int i = 0; i < saveData.birds.size(); i++) {
@@ -288,6 +291,12 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        if (game.backgroundMusic.isPlaying()) {
+            game.backgroundMusic.pause();
+        }
+        if (game.levelCompleteMusic.isPlaying()) {
+            game.levelCompleteMusic.stop();
+        }
         this.level.applyAllRotations();
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
@@ -338,18 +347,13 @@ public class GameScreen implements Screen {
     }
 
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     @Override
-    public void resume() {
-    }
+    public void resume() {}
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
     public void dispose() {

@@ -18,9 +18,11 @@ public class ResultScreen implements Screen {
     private final Core game;
     private final Viewport viewport;
     private final Stage stage;
+    private final boolean won;
 
     public ResultScreen(Core game, GameScreen gameScreen, boolean won) {
         this.game = game;
+        this.won = won;
         this.viewport = new FitViewport(Core.V_WIDTH, Core.V_HEIGHT, new OrthographicCamera());
         this.stage = new Stage(viewport, this.game.batch);
 
@@ -60,7 +62,12 @@ public class ResultScreen implements Screen {
 
     @Override
     public void show() {
-
+        if (game.backgroundMusic.isPlaying()) {
+            game.backgroundMusic.pause();
+        }
+        if (won && !game.levelCompleteMusic.isPlaying()) {
+            game.levelCompleteMusic.play();
+        }
     }
 
     @Override

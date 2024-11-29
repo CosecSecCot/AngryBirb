@@ -9,6 +9,17 @@ public abstract class Block extends Entity {
     protected int points;
     protected float rotationAngle;
 
+    /**
+     * Constructor for sample block. Only to be used for testing!
+     *
+     * @param damage damage dealt by the block.
+     * @param health health of the block.
+     */
+    public Block(double damage, double health) {
+        super(health);
+        this.damage = damage;
+    }
+
     public Block(World world, Core game, String sprite_region, float x_pos, float y_pos, int sprite_x_pos, int sprite_y_pos, int width, int height, float xOffset, float yOffset, double health) {
         super(world, game, sprite_region, x_pos, y_pos, sprite_x_pos, sprite_y_pos, width, height, xOffset, yOffset, health);
         this.rotationAngle = 0f;

@@ -8,6 +8,7 @@ import java.util.List;
 public class LevelSave implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+    public int score;
 
     // Stores bird data
     public static class BirdData implements Serializable {

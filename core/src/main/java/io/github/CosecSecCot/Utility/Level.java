@@ -18,6 +18,8 @@ public class Level {
     private boolean isComplete;
     private boolean win;
     private int currentBirdIndex;
+    private double nextBirdTimer = 0;
+    private static final float TIME_FOR_NEXT_BIRD = 0.75f;
 
     public Level(int levelNumber) {
         this.LEVEL_NUMBER = levelNumber;
@@ -43,7 +45,6 @@ public class Level {
         for (Bird bird : birds) allBirdsDestroyed &= bird.isDestroyed();
 
         if (pigs.isEmpty() || allBirdsDestroyed) {
-//            Core.logger.info("LEVEL COMPLETE!");
             this.isComplete = true;
             this.win = pigs.isEmpty();
         }
@@ -56,11 +57,15 @@ public class Level {
 
         slingshot.update(deltaTime);
         if (slingshot.birdHasBeenLaunchedSuccessfully()) {
+            nextBirdTimer += deltaTime;
             Core.logger.info("Started Bird destroy timer!");
             slingshot.getCurrentBird().startDestroyTimer();
             Core.logger.info("Bird successfully launched. Loading next bird...");
             Core.logger.info("Birds left: " + birds.size());
-            placeBirdOnSlingshot();
+            if (nextBirdTimer > TIME_FOR_NEXT_BIRD) {
+                placeBirdOnSlingshot();
+                nextBirdTimer = 0;
+            }
         }
     }
 
@@ -125,6 +130,10 @@ public class Level {
         return score;
     }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public boolean isComplete() {
         return isComplete;
     }
@@ -177,22 +186,6 @@ public class Level {
 
         // reset queue
         entitiesToDestroy.clear();
-    }
-
-    public void destroy() {
-        for (Bird bird : birds) {
-            bird.destroy();
-        }
-        birds.clear();
-        for (Pig pig : pigs) {
-            pig.destroy();
-        }
-        birds.clear();
-        for (Block block : blocks) {
-            block.destroy();
-        }
-        blocks.clear();
-        slingshot.destroy();
     }
 }
 

@@ -7,11 +7,23 @@ import io.github.CosecSecCot.Core;
 
 public abstract class Bird extends Entity {
     protected double damage;
+    private boolean isLauched;
     private float destroyTimer = 0f;
     private boolean isFainted = false;
     private static final float TIME_TO_DESTROY = 6f;
     private float fadeTimer = 0f;
     private static final float FADE_AWAY_TIME = 1f;
+
+    /**
+     * Constructor for sample bird. Only to be used for testing!
+     *
+     * @param damage damage dealt by the bird.
+     * @param health health of the bird.
+     */
+    public Bird(double damage, double health) {
+        super(health);
+        this.damage = damage;
+    }
 
     public Bird(World world, Core game, String sprite_region, float x_pos, float y_pos, int sprite_x_pos, int sprite_y_pos, int width, int height, float xOffset, float yOffset, double health) {
         super(world, game, sprite_region, x_pos, y_pos, sprite_x_pos, sprite_y_pos, width, height, xOffset, yOffset, health);
@@ -34,6 +46,14 @@ public abstract class Bird extends Entity {
 
     public double getDamage() {
         return damage;
+    }
+
+    public boolean isLauched() {
+        return isLauched;
+    }
+
+    public void setLauched(boolean lauched) {
+        isLauched = lauched;
     }
 
     @Override

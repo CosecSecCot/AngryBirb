@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import io.github.CosecSecCot.Core;
 import io.github.CosecSecCot.Screens.GameScreen;
 import io.github.CosecSecCot.Screens.LevelSelectScreen;
-//import io.github.CosecSecCot.Screens.ResultScreen;
 
 /**
  * HUD for the game.
@@ -26,7 +25,6 @@ public class GameScreenHUD implements Disposable {
     private final ImageButton pauseButton;
     private final Window pauseMenu;
     private final Window saveLoadPopup;
-//    private final ImageButton resultButton;
 
     public GameScreenHUD(Core game, GameScreen gameScreen) {
         this.viewport = new FitViewport(Core.V_WIDTH, Core.V_HEIGHT, new OrthographicCamera());
@@ -49,16 +47,6 @@ public class GameScreenHUD implements Disposable {
                 pauseMenu.setVisible(true);
             }
         });
-
-//        resultButton = new ImageButton(game.skin, "result_button");
-//        resultButton.setPosition(stage.getWidth() - resultButton.getWidth() - 10, 10);
-//        resultButton.addListener(new ClickListener() {
-//            @Override
-//            public void clicked(InputEvent event, float x, float y) {
-//                Core.logger.info("Switched to ResultScreen");
-//                game.setScreen(new ResultScreen(game, gameScreen));
-//            }
-//        });
 
         // Pause Menu Elements
         ImageButton resumeButton = new ImageButton(game.skin, "resume_button");
@@ -100,6 +88,7 @@ public class GameScreenHUD implements Disposable {
             }
         });
 
+        // Save Menu Elements
         saveLoadPopup = new Window("Save Load", game.skin);
 
         ImageButton saveButton = new ImageButton(game.skin, "save_button");
@@ -172,7 +161,6 @@ public class GameScreenHUD implements Disposable {
 
         this.stage.addActor(this.score);
         this.stage.addActor(pauseButton);
-//        this.stage.addActor(resultButton);
         this.stage.addActor(pauseMenu);
         stage.addActor(saveLoadPopup);
 //        stage.setDebugAll(true);
@@ -183,18 +171,12 @@ public class GameScreenHUD implements Disposable {
         Core.logger.info("Disabled Buttons");
         pauseButton.setDisabled(true);
         pauseButton.setTouchable(Touchable.disabled);
-
-//        resultButton.setDisabled(true);
-//        resultButton.setTouchable(Touchable.disabled);
     }
 
     public void enableButtons() {
         Core.logger.info("Enabled Buttons");
         pauseButton.setDisabled(false);
         pauseButton.setTouchable(Touchable.enabled);
-
-//        resultButton.setDisabled(false);
-//        resultButton.setTouchable(Touchable.enabled);
     }
 
     public Stage getStage() {

@@ -16,14 +16,10 @@ public class Slingshot extends InputAdapter {
     private final Sprite front;
     private final Camera camera;
     private final Vector2 position;
-    private Vector2 angle;
     private boolean isDragging;
     private Bird currentBird;
-    private float launchVelocity;
     private final float MAX_PULL_DISTANCE = 100f;
     private final float MIN_PULL_DISTANCE = 40f;
-    private float pullDistance;
-    private Vector2 rubberBandEndCoordinate;
     private final World world;
     private Body body;
 
@@ -107,28 +103,11 @@ public class Slingshot extends InputAdapter {
         return position;
     }
 
-    public Vector2 getAngle() {
-        return angle;
-    }
-
     public Bird getCurrentBird() {
         return currentBird;
     }
 
-    public float getLaunchVelocity() {
-        return launchVelocity;
-    }
-
-    public float getPullDistance() {
-        return pullDistance;
-    }
-
-    public Vector2 getRubberBandEndCoordinate() {
-        return rubberBandEndCoordinate;
-    }
-
     public Vector2 getBirdPlacementPosition() {
-        // Calculate the bird's resting position between the poles
         return new Vector2(position.x, position.y + getSize().y / 2);
     }
 
@@ -154,10 +133,9 @@ public class Slingshot extends InputAdapter {
             && touchY > (slingshotY - 200) && touchY < (slingshotY + slingshotHeight + 200);
     }
 
-
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (currentBird == null) return false;
+        if (currentBird == null || currentBird.isLauched()) return false;
 
         Core.logger.info("Touched Down");
 
@@ -176,7 +154,7 @@ public class Slingshot extends InputAdapter {
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
 //        Core.logger.info("isDragging: " + isDragging);
-        if (!isDragging || currentBird == null) return false;
+        if (!isDragging || currentBird == null || currentBird.isLauched()) return false;
 
         Core.logger.info("touch Dragged");
 
@@ -200,7 +178,7 @@ public class Slingshot extends InputAdapter {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        if (currentBird == null) return false;
+        if (currentBird == null || currentBird.isLauched()) return false;
         if (isDragging) {
             isDragging = false;
         }
@@ -238,7 +216,9 @@ public class Slingshot extends InputAdapter {
                 currentBird.getBody().getWorldCenter(),
                 true
             );
+            currentBird.setLauched(true);
 
+            Core.logger.info("Bird Launched!");
             Core.logger.info("Impulse applied: " + pullVector);
         }
 
@@ -253,7 +233,8 @@ public class Slingshot extends InputAdapter {
     public boolean birdHasBeenLaunchedSuccessfully() {
         if (currentBird == null || currentBird.isDestroyed()) return false;
 
-        return currentBird.getBody().getPosition().dst(getBirdPlacementPosition()) > MAX_PULL_DISTANCE + 10;
+//        return currentBird.getBody().getPosition().dst(getBirdPlacementPosition()) > MAX_PULL_DISTANCE + 10;
+        return currentBird.isLauched();
     }
 
     public void destroy() {

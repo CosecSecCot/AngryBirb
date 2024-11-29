@@ -2,6 +2,7 @@ package io.github.CosecSecCot;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -21,6 +22,8 @@ public class Core extends Game {
     public SpriteBatch batch;
     public Skin skin;
     public TextureAtlas atlas;
+    public Music backgroundMusic;
+    public Music levelCompleteMusic;
 
     public static Vector2 convertToWorldCoordinates(Camera camera, int screenX, int screenY) {
         Vector3 worldCoordinates = new Vector3(screenX, screenY, 0);
@@ -36,6 +39,14 @@ public class Core extends Game {
         atlas = new TextureAtlas("angrybirb_sprites.atlas");
 
         logger = new Logger(true);
+
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("title_theme.mp3"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(0.20f);
+
+        levelCompleteMusic = Gdx.audio.newMusic(Gdx.files.internal("level_complete.mp3"));
+        levelCompleteMusic.setLooping(false);
+        levelCompleteMusic.setVolume(0.15f);
 
         setScreen(new MainMenuScreen(this));
     }

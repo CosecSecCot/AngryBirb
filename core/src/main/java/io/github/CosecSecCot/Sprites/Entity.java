@@ -17,7 +17,7 @@ public abstract class Entity extends Sprite {
     private float yOffset;
     private boolean isDestroyed;
 
-    public Entity(int health) {
+    public Entity(double health) {
         this.position = null;
         this.size = null;
         this.health = health;

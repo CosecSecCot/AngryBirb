@@ -30,7 +30,7 @@ public class CollisionHandler implements ContactListener {
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {}
 
-    private void handleCollision(Object objectA, Object objectB) {
+    public static void handleCollision(Object objectA, Object objectB) {
         if (objectA instanceof Bird bird) {
             if (objectB instanceof Pig pig) {
                 applyCollisionDamage(bird, pig, 10, bird.getDamage());
@@ -44,11 +44,13 @@ public class CollisionHandler implements ContactListener {
         }
     }
 
-    private void applyCollisionDamage(Entity entityA, Entity entityB, double damageToA, double damageToB) {
+    public static void applyCollisionDamage(Entity entityA, Entity entityB, double damageToA, double damageToB) {
         entityA.takeDamage(damageToA);
         entityB.takeDamage(damageToB);
 
-        Core.logger.info(String.format("%s HP: %f/%f", entityA.getClass().getSimpleName(), entityA.getCurrentHealth(), entityA.getMaxHealth()));
-        Core.logger.info(String.format("%s HP: %f/%f", entityB.getClass().getSimpleName(), entityB.getCurrentHealth(), entityB.getMaxHealth()));
+        if (Core.logger != null) {
+            Core.logger.info(String.format("%s HP: %f/%f", entityA.getClass().getSimpleName(), entityA.getCurrentHealth(), entityA.getMaxHealth()));
+            Core.logger.info(String.format("%s HP: %f/%f", entityB.getClass().getSimpleName(), entityB.getCurrentHealth(), entityB.getMaxHealth()));
+        }
     }
 }

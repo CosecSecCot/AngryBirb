@@ -61,7 +61,12 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void show() {
-
+        if (!game.backgroundMusic.isPlaying()) {
+            game.backgroundMusic.play();
+        }
+        if (game.levelCompleteMusic.isPlaying()) {
+            game.levelCompleteMusic.stop();
+        }
     }
 
     @Override
