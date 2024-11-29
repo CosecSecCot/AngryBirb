@@ -10,7 +10,7 @@ public abstract class Bird extends Entity {
     private boolean isLauched;
     private float destroyTimer = 0f;
     private boolean isFainted = false;
-    private static final float TIME_TO_DESTROY = 6f;
+    private static final float TIME_TO_DESTROY = 12f;
     private float fadeTimer = 0f;
     private static final float FADE_AWAY_TIME = 1f;
 

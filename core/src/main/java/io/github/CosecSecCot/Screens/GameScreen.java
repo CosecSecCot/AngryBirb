@@ -336,7 +336,7 @@ public class GameScreen implements Screen {
         this.level.draw(this.game.batch);
         this.game.batch.end();
 
-        debugRenderer.render(world, camera.combined);
+        //debugRenderer.render(world, camera.combined);
         this.hud.getStage().draw();
     }
 

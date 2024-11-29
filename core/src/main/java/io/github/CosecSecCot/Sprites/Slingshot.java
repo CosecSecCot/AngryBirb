@@ -60,6 +60,7 @@ public class Slingshot extends InputAdapter {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         this.body.createFixture(fixtureDef);
+        this.body.setActive(false);
     }
 
     /**
