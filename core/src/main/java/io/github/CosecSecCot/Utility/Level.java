@@ -18,7 +18,7 @@ public class Level {
     private boolean isComplete;
     private boolean win;
     private int currentBirdIndex;
-    private double nextBirdTimer = 0;
+    private float nextBirdTimer = 0;
     private static final float TIME_FOR_NEXT_BIRD = 0.75f;
 
     public Level(int levelNumber) {

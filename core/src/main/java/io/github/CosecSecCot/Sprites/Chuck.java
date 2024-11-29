@@ -6,8 +6,8 @@ import io.github.CosecSecCot.Core;
 
 public class Chuck extends Bird {
     public Chuck(World world, Core game, float x_pos, float y_pos) {
-        super(world, game, "bird_and_pigs", x_pos, y_pos, 668, 879, 58, 54, -3, 0, 20);
-        this.damage = 10;
+        super(world, game, "bird_and_pigs", x_pos, y_pos, 668, 879, 58, 54, -3, 0, 15);
+        this.damage = 12;
     }
 
     @Override
