@@ -13,7 +13,7 @@ public abstract class Bird extends Entity {
     private float fadeTimer = 0f;
     private static final float FADE_AWAY_TIME = 1f;
 
-    public Bird(World world, Core game, String sprite_region, int x_pos, int y_pos, int sprite_x_pos, int sprite_y_pos, int width, int height, float xOffset, float yOffset, double health) {
+    public Bird(World world, Core game, String sprite_region, float x_pos, float y_pos, int sprite_x_pos, int sprite_y_pos, int width, int height, float xOffset, float yOffset, double health) {
         super(world, game, sprite_region, x_pos, y_pos, sprite_x_pos, sprite_y_pos, width, height, xOffset, yOffset, health);
         body.setUserData(this);
     }

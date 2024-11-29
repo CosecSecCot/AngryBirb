@@ -6,12 +6,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import io.github.CosecSecCot.Core;
 
 public class Glass extends Block {
-    public Glass(World world, Core game, int x_pos, int y_pos) {
+    public Glass(World world, Core game, float x_pos, float y_pos) {
         super(world, game, "blocks", x_pos, y_pos, 660, 714, 167, 20, 0, 0, 5);
         this.points = 25;
     }
 
-    public Glass(World world, Core game, int x_pos, int y_pos, float rotationAngle) {
+    public Glass(World world, Core game, float x_pos, float y_pos, float rotationAngle) {
         super(world, game, "blocks", x_pos, y_pos, 660, 714, 167, 20, 0, 0, 5, rotationAngle);
         this.points = 25;
     }

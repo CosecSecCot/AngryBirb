@@ -17,7 +17,7 @@ public abstract class Entity extends Sprite {
     private float yOffset;
     private boolean isDestroyed;
 
-    public Entity(World world, Core game, String sprite_region, int x_pos, int y_pos, int sprite_x_pos, int sprite_y_pos, int width, int height, float xOffset, float yOffset, double health) {
+    public Entity(World world, Core game, String sprite_region, float x_pos, float y_pos, int sprite_x_pos, int sprite_y_pos, int width, int height, float xOffset, float yOffset, double health) {
         super(game.atlas.findRegion(sprite_region));
         int spriteStartX = game.atlas.findRegion(sprite_region).getRegionX();
         int spriteStartY = game.atlas.findRegion(sprite_region).getRegionY();

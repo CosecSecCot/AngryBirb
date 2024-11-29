@@ -41,7 +41,7 @@ BASE_IMAGE_BUTTON
   index: -1
 LEVEL_BUTTON
   rotate: false
-  xy: 1023, 1296
+  xy: 1296, 1569
   size: 60, 76
   orig: 60, 76
   offset: 0, 0
@@ -51,6 +51,13 @@ PLAY_BUTTON
   xy: 1023, 1488
   size: 157, 157
   orig: 157, 157
+  offset: 0, 0
+  index: -1
+SAVE_BUTTON
+  rotate: false
+  xy: 115, 246
+  size: 112, 112
+  orig: 112, 112
   offset: 0, 0
   index: -1
 BACK_BUTTON
@@ -71,7 +78,7 @@ BASE_BUTTON
   index: -1
 EXIT_BUTTON
   rotate: false
-  xy: 115, 262
+  xy: 515, 846
   size: 97, 96
   orig: 97, 96
   offset: 0, 0
@@ -99,14 +106,14 @@ RESULT_BUTTON
   index: -1
 RESUME_BUTTON
   rotate: false
-  xy: 629, 968
+  xy: 1023, 1284
   size: 88, 88
   orig: 88, 88
   offset: 0, 0
   index: -1
 RETRY_BUTTON
   rotate: false
-  xy: 515, 846
+  xy: 629, 960
   size: 96, 96
   orig: 96, 96
   offset: 0, 0

@@ -3,6 +3,8 @@ package io.github.CosecSecCot.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -56,7 +58,7 @@ public class LevelSelectScreen implements Screen {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    game.setScreen(new GameScreen(game, new Level(levelNumber)));
+                    game.setScreen(new GameScreen(new World(new Vector2(0, -10), true), game, new Level(levelNumber), false));
                 }
             });
             levelButtons.add(button);

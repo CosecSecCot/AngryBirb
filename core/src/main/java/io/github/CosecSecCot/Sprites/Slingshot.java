@@ -27,7 +27,7 @@ public class Slingshot extends InputAdapter {
     private final World world;
     private Body body;
 
-    public Slingshot(World world, Core game, int x_pos, int y_pos, Camera camera) {
+    public Slingshot(World world, Core game, float x_pos, float y_pos, Camera camera) {
         this.back = new Sprite(game.atlas.findRegion("bird_and_pigs"));
         this.front = new Sprite(game.atlas.findRegion("bird_and_pigs"));
         this.world = world;

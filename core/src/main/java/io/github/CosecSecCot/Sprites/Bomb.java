@@ -4,7 +4,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import io.github.CosecSecCot.Core;
 
 public class Bomb extends Bird {
-    public Bomb(World world, Core game, int x_pos, int y_pos) {
+    public Bomb(World world, Core game, float x_pos, float y_pos) {
         super(world, game, "bird_and_pigs", x_pos, y_pos, 409, 725, 61, 81, 0, -10, 25);
         this.damage = 12;
     }

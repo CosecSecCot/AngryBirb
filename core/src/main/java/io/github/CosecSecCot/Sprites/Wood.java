@@ -4,12 +4,12 @@ import com.badlogic.gdx.physics.box2d.*;
 import io.github.CosecSecCot.Core;
 
 public class Wood extends Block {
-    public Wood(World world, Core game, int x_pos, int y_pos) {
+    public Wood(World world, Core game, float x_pos, float y_pos) {
         super(world, game, "blocks", x_pos, y_pos, 490, 714, 167, 20, 0, 0, 10);
         this.points = 50;
     }
 
-    public Wood(World world, Core game, int x_pos, int y_pos, float rotationAngle) {
+    public Wood(World world, Core game, float x_pos, float y_pos, float rotationAngle) {
         super(world, game, "blocks", x_pos, y_pos, 490, 714, 167, 20, 0, 0,10, rotationAngle);
         this.points = 50;
     }

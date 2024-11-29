@@ -176,6 +176,14 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		name: LEVEL_BUTTON
 		color: LIGHT_GREY
 	}
+	SAVE_BUTTON_OVER: {
+		name: SAVE_BUTTON
+		color: MEDIUM_GRAY
+	}
+	SAVE_BUTTON_CLICKED: {
+		name: SAVE_BUTTON
+		color: DARK_GREY
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: {
@@ -243,6 +251,20 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		imageUp: ADD_SCORE_BUTTON
 		imageDown: ADD_SCORE_BUTTON_CLICKED
 		imageOver: ADD_SCORE_BUTTON_OVER
+		pressedOffsetY: -2
+	}
+	save_button: {
+		imageUp: SAVE_BUTTON
+		imageDown: SAVE_BUTTON_CLICKED
+		imageOver: SAVE_BUTTON_OVER
+		pressedOffsetY: -2
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
+	without_image: {
+		font: angrybirds-regular
+		downFontColor: MEDIUM_GRAY
+		overFontColor: LIGHT_GREY
 		pressedOffsetY: -2
 	}
 }

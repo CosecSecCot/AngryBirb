@@ -4,9 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -27,6 +25,7 @@ public class GameScreenHUD implements Disposable {
     private final Label score;
     private final ImageButton pauseButton;
     private final Window pauseMenu;
+    private final Window saveLoadPopup;
 //    private final ImageButton resultButton;
 
     public GameScreenHUD(Core game, GameScreen gameScreen) {
@@ -70,6 +69,7 @@ public class GameScreenHUD implements Disposable {
                 Core.paused = false;
                 enableButtons();
                 pauseMenu.setVisible(false);
+                saveLoadPopup.setVisible(false);
             }
         });
 
@@ -81,6 +81,7 @@ public class GameScreenHUD implements Disposable {
                 Core.paused = false;
                 enableButtons();
                 pauseMenu.setVisible(false);
+                saveLoadPopup.setVisible(false);
                 gameScreen.restartLevel();
             }
         });
@@ -93,10 +94,56 @@ public class GameScreenHUD implements Disposable {
                 Core.paused = false;
                 enableButtons();
                 pauseMenu.setVisible(false);
+                saveLoadPopup.setVisible(false);
                 gameScreen.dispose();
                 game.setScreen(new LevelSelectScreen(game));
             }
         });
+
+        saveLoadPopup = new Window("Save Load", game.skin);
+
+        ImageButton saveButton = new ImageButton(game.skin, "save_button");
+        saveButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Core.logger.info("Saving the current level");
+                saveLoadPopup.setVisible(true);
+                saveLoadPopup.toFront();
+            }
+        });
+
+        ImageTextButton savePopupButton = new ImageTextButton("Save", game.skin, "without_image");
+        savePopupButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Core.logger.info("Saving level state...");
+                gameScreen.saveLevel();
+                saveLoadPopup.setVisible(false);
+            }
+        });
+
+        ImageTextButton loadPopupButton = new ImageTextButton("Load", game.skin, "without_image");
+        loadPopupButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Core.logger.info("Loading saved level state...");
+                Core.paused = false;
+                enableButtons();
+                pauseMenu.setVisible(false);
+                saveLoadPopup.setVisible(false);
+                gameScreen.loadLevel();
+            }
+        });
+
+        ImageTextButton cancelPopupButton = new ImageTextButton("Cancel", game.skin, "without_image");
+        cancelPopupButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Core.logger.info("Cancelled Save/Load operation");
+                saveLoadPopup.setVisible(false);
+            }
+        });
+
 
         pauseMenu.padTop(64);
         pauseMenu.padLeft(32);
@@ -105,16 +152,31 @@ public class GameScreenHUD implements Disposable {
         pauseMenu.setPosition(0, 0);
         pauseMenu.add(resumeButton).padBottom(100).row();
         pauseMenu.add(retryButton).pad(10).row();
+        pauseMenu.add(saveButton).pad(10).row();
         pauseMenu.add(menuButton);
         pauseMenu.setResizable(false);
         pauseMenu.setMovable(false);
         pauseMenu.setVisible(false);
 
+        saveLoadPopup.padTop(64);
+        saveLoadPopup.padLeft(32);
+        saveLoadPopup.setWidth(stage.getWidth() / 2);
+        saveLoadPopup.setHeight(stage.getHeight() / 2);
+        saveLoadPopup.setPosition(stage.getWidth() / 4, stage.getHeight() / 4);
+        saveLoadPopup.add(savePopupButton).pad(10);
+        saveLoadPopup.add(loadPopupButton).pad(10).row();
+        saveLoadPopup.add(cancelPopupButton).colspan(2).pad(10);
+        saveLoadPopup.setVisible(false);
+        saveLoadPopup.setMovable(false);
+        saveLoadPopup.setResizable(false);
+
         this.stage.addActor(this.score);
         this.stage.addActor(pauseButton);
 //        this.stage.addActor(resultButton);
         this.stage.addActor(pauseMenu);
+        stage.addActor(saveLoadPopup);
 //        stage.setDebugAll(true);
+
     }
 
     public void disableButtons() {

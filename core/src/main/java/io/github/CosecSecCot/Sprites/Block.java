@@ -7,17 +7,15 @@ import io.github.CosecSecCot.Core;
 public abstract class Block extends Entity {
     protected double damage = 10;
     protected int points;
-    protected double resistance;
-    protected double hitsToDestroy;
     protected float rotationAngle;
 
-    public Block(World world, Core game, String sprite_region, int x_pos, int y_pos, int sprite_x_pos, int sprite_y_pos, int width, int height, float xOffset, float yOffset, double health) {
+    public Block(World world, Core game, String sprite_region, float x_pos, float y_pos, int sprite_x_pos, int sprite_y_pos, int width, int height, float xOffset, float yOffset, double health) {
         super(world, game, sprite_region, x_pos, y_pos, sprite_x_pos, sprite_y_pos, width, height, xOffset, yOffset, health);
         this.rotationAngle = 0f;
         body.setUserData(this);
     }
 
-    public Block(World world, Core game, String sprite_region, int x_pos, int y_pos, int sprite_x_pos, int sprite_y_pos, int width, int height, float xOffset, float yOffset, double health, float rotationAngle) {
+    public Block(World world, Core game, String sprite_region, float x_pos, float y_pos, int sprite_x_pos, int sprite_y_pos, int width, int height, float xOffset, float yOffset, double health, float rotationAngle) {
         super(world, game, sprite_region, x_pos, y_pos, sprite_x_pos, sprite_y_pos, width, height, xOffset, yOffset, health);
         this.rotationAngle = rotationAngle;
         body.setUserData(this);

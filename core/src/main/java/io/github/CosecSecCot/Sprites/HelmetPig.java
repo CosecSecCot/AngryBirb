@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import io.github.CosecSecCot.Core;
 
 public class HelmetPig extends Pig {
-    public HelmetPig(World world, Core game, int x_pos, int y_pos) {
+    public HelmetPig(World world, Core game, float x_pos, float y_pos) {
         super(world, game, "bird_and_pigs", x_pos, y_pos, 493, 446, 93, 83, 0, 0, 12);
         this.points = 500;
     }

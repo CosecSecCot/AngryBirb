@@ -6,12 +6,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import io.github.CosecSecCot.Core;
 
 public class Stone extends Block {
-    public Stone(World world, Core game, int x_pos, int y_pos) {
+    public Stone(World world, Core game, float x_pos, float y_pos) {
         super(world, game, "blocks", x_pos, y_pos, 320, 714, 167, 20, 0, 0,15);
         this.points = 75;
     }
 
-    public Stone(World world, Core game, int x_pos, int y_pos, float rotationAngle) {
+    public Stone(World world, Core game, float x_pos, float y_pos, float rotationAngle) {
         super(world, game, "blocks", x_pos, y_pos, 320, 714, 167, 20, 0, 0,15, rotationAngle);
         this.points = 75;
     }
